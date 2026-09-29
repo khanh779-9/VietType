@@ -1,0 +1,105 @@
+<UserControl x:Class="VietType.Pages.HotkeysPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:VietType.Controls">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="22,18,22,22">
+            <TextBlock Text="Phím tắt" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Thiết lập các tổ hợp phím chuyển đổi trạng thái và phím chức năng nhanh." Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,14"/>
+
+            <!-- Card 1: Phím tắt hệ thống -->
+            <controls:SettingCard Title="Phím tắt hệ thống">
+                <StackPanel>
+                    <!-- Phím chuyển E / V -->
+                    <DockPanel LastChildFill="True" Margin="0,0,0,4">
+                        <TextBlock Text="Phím chuyển đổi E / V" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Text="(Bật / Tắt bộ gõ)" Foreground="{DynamicResource MutedTextBrush}" FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <CheckBox x:Name="HkToggleCtrl" Content="Ctrl" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkToggleShift" Content="Shift" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkToggleAlt" Content="Alt" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkToggleWin" Content="Win" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                        </StackPanel>
+                        <ComboBox x:Name="HkToggleKey" Grid.Column="1" Width="135" SelectionChanged="SettingCombo_Changed"/>
+                    </Grid>
+
+                    <!-- Phím chuyển cơ chế / kiểu gõ -->
+                    <DockPanel LastChildFill="True" Margin="0,0,0,4">
+                        <TextBlock Text="Phím chuyển cơ chế" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Text="(Chuyển đổi Telex / VNI / VIQR)" Foreground="{DynamicResource MutedTextBrush}" FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <CheckBox x:Name="HkMethodCtrl" Content="Ctrl" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkMethodShift" Content="Shift" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkMethodAlt" Content="Alt" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkMethodWin" Content="Win" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                        </StackPanel>
+                        <ComboBox x:Name="HkMethodKey" Grid.Column="1" Width="135" SelectionChanged="SettingCombo_Changed"/>
+                    </Grid>
+
+                    <!-- Phím phục hồi từ -->
+                    <DockPanel LastChildFill="True" Margin="0,0,0,4">
+                        <TextBlock Text="Phím phục hồi từ" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                        <TextBlock Text="(Khôi phục ký tự gốc chưa bỏ dấu)" Foreground="{DynamicResource MutedTextBrush}" FontSize="11" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <Grid Margin="0,0,0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <CheckBox x:Name="HkRestoreCtrl" Content="Ctrl" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkRestoreShift" Content="Shift" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkRestoreAlt" Content="Alt" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkRestoreWin" Content="Win" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                        </StackPanel>
+                        <ComboBox x:Name="HkRestoreKey" Grid.Column="1" Width="135" SelectionChanged="SettingCombo_Changed"/>
+                    </Grid>
+                </StackPanel>
+            </controls:SettingCard>
+
+            <!-- Card 2: Phím chức năng nhanh F1 - F12 -->
+            <controls:SettingCard Title="Tổ hợp phím chức năng nhanh (F1 - F12)">
+                <StackPanel>
+                    <DockPanel LastChildFill="True">
+                        <CheckBox x:Name="HkQuickEnable" Content="Bật tổ hợp phím chức năng nhanh (F1 - F12)" FontWeight="SemiBold" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    </DockPanel>
+                    <StackPanel x:Name="QuickKeysPanel" Margin="0,8,0,0">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                            <TextBlock Text="Phím bổ trợ:" Foreground="{DynamicResource MutedTextBrush}" VerticalAlignment="Center" Margin="0,0,12,0" FontSize="11.5"/>
+                            <CheckBox x:Name="HkQuickCtrl" Content="Ctrl" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkQuickShift" Content="Shift" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkQuickAlt" Content="Alt" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                            <CheckBox x:Name="HkQuickWin" Content="Win" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,10,0"/>
+                        </StackPanel>
+
+                        <Border Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8" Padding="12,10" Margin="0,2,0,0">
+                            <UniformGrid Columns="3">
+                                <CheckBox x:Name="HkQuickF1" Content="F1 (Bật TV)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF5" Content="F5 (Bảng điều khiển)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF9" Content="F9 (Bật/Tắt gõ tắt)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+
+                                <CheckBox x:Name="HkQuickF2" Content="F2 (Tắt TV)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF8" Content="F8 (Bảng gõ tắt)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF12" Content="F12 (Reset / Khôi phục)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+
+                                <CheckBox x:Name="HkQuickF3" Content="F3 (Mã Unicode)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                            </UniformGrid>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </controls:SettingCard>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

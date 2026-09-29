@@ -1,0 +1,44 @@
+<UserControl x:Class="VietType.Pages.AdvancedPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:VietType.Controls">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="22,18,22,22">
+            <TextBlock Text="Nâng cao" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Giao diện, hệ thống và công cụ chẩn đoán." Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,14"/>
+
+            <controls:SettingCard Title="Hệ thống &amp; Tương thích">
+                <StackPanel>
+                    <CheckBox x:Name="StartWithWindowsCheck" Content="Khởi động cùng Windows" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,0,8"/>
+                    <CheckBox x:Name="ShowWindowAtStartupCheck" Content="Hiện cửa sổ khi khởi động" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,0,0,8"/>
+                    <CheckBox x:Name="UseClipboardCheck" Content="Sử dụng Clipboard thay thế cho SendInput" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <TextBlock Text="Khắc phục lỗi gõ trong Remote Desktop, máy ảo VM, Console/Terminal hoặc ứng dụng không nhận SendInput." Style="{StaticResource SmallMutedTextStyle}" Margin="22,2,0,0"/>
+                </StackPanel>
+            </controls:SettingCard>
+
+            <controls:SettingCard Title="Giao diện">
+                <StackPanel>
+                    <TextBlock Text="Theme" Style="{StaticResource FieldLabelStyle}"/>
+                    <ComboBox x:Name="ThemeCombo" SelectionChanged="ThemeCombo_SelectionChanged">
+                        <ComboBoxItem Content="Light"/><ComboBoxItem Content="Dark"/><ComboBoxItem Content="Auto (theo Windows)"/>
+                    </ComboBox>
+                </StackPanel>
+            </controls:SettingCard>
+
+            <controls:SettingCard Title="Debug &amp; Nhật ký">
+                <StackPanel>
+                    <CheckBox x:Name="DebugTrackingCheck" Content="Theo dõi log hook bàn phím" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <TextBox x:Name="DebugLogBox" Height="100" IsReadOnly="True" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" FontFamily="Cascadia Mono" Margin="0,8,0,0"/>
+                </StackPanel>
+            </controls:SettingCard>
+
+            <WrapPanel Margin="0,6,0,0">
+                <Button x:Name="ResetDefaultsButton" Content="Khôi phục mặc định" Click="ResetDefaults_Click" Style="{StaticResource DangerButtonStyle}" Margin="0,0,8,8"/>
+                <Button x:Name="CheckUpdatesButton" Content="Kiểm tra cập nhật" Click="CheckUpdates_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,8"/>
+                <Button x:Name="DataFolderButton" Content="Thư mục dữ liệu" Click="DataFolder_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,8"/>
+                <Button x:Name="GuideButton" Content="Hướng dẫn" Click="Guide_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,8"/>
+                <Button x:Name="EncodingTablesButton" Content="Bảng mã" Click="EncodingTables_Click" Style="{StaticResource SecondaryButtonStyle}" Margin="0,0,8,8"/>
+            </WrapPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

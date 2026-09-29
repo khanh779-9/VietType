@@ -1,0 +1,21 @@
+## Build and output directories
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+out/
+*_wpftmp.*
+
+## Visual Studio cache and settings
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+## Windows / OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

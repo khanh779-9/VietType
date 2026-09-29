@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient: Deep Luxury Crimson to Ruby -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF2E54"/>
+      <stop offset="40%" stop-color="#E11D48"/>
+      <stop offset="85%" stop-color="#9F1239"/>
+      <stop offset="100%" stop-color="#700B2B"/>
+    </linearGradient>
+
+    <!-- Top Highlight Ambient Light -->
+    <radialGradient id="innerGlow" cx="50%" cy="20%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.32"/>
+      <stop offset="60%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Glass Surface Gradient -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="45%" stop-color="#FFFFFF" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.2"/>
+    </linearGradient>
+
+    <!-- Bevel Stroke Gradient -->
+    <linearGradient id="borderGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.65"/>
+      <stop offset="50%" stop-color="#FDA4AF" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#4C0519" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- Left Wing of V (White Pearl to Soft Gold) -->
+    <linearGradient id="leftWingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#FFFBEB"/>
+      <stop offset="100%" stop-color="#FDE68A"/>
+    </linearGradient>
+
+    <!-- Right Wing of V (Radiant Gold to Vivid Amber) -->
+    <linearGradient id="rightWingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047"/>
+      <stop offset="45%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <!-- Shadow for Wing Overlap -->
+    <linearGradient id="foldShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Vector Ambient Shadow for Squircle (100% universal without feDropShadow) -->
+  <rect x="36" y="52" width="440" height="440" rx="108" ry="108" fill="#4C0519" opacity="0.45"/>
+  <rect x="36" y="44" width="440" height="440" rx="108" ry="108" fill="#000000" opacity="0.2"/>
+
+  <!-- Base Squircle -->
+  <rect x="36" y="36" width="440" height="440" rx="108" ry="108" fill="url(#bgGrad)"/>
+  <rect x="36" y="36" width="440" height="440" rx="108" ry="108" fill="url(#innerGlow)"/>
+  <rect x="36" y="36" width="440" height="440" rx="108" ry="108" fill="url(#glassGrad)"/>
+  <rect x="37" y="37" width="438" height="438" rx="107" ry="107" fill="none" stroke="url(#borderGlow)" stroke-width="2.5"/>
+
+  <!-- Hero Emblem: The Signature 3D Ribbon Letter "V" -->
+  <g transform="translate(0, -12)">
+
+    <!-- Vector Ambient Shadow for the Letter V (Universal) -->
+    <g transform="translate(0, 10)" opacity="0.38">
+      <path d="M256,388 L386,166 C390,159 385,150 376,150 L318,150 C312,150 306,153 302,159 L238,272 L256,388 Z" fill="#20020A"/>
+      <path d="M126,150 C117,150 112,159 116,167 L236,382 C243,394 260,396 269,385 L286,362 L182,159 C178,153 172,150 166,150 Z" fill="#20020A"/>
+    </g>
+
+    <!-- Right Wing of V (Behind Left Wing - Radiant Amber Gold) -->
+    <path d="M256,386 L208,310 L308,162 L372,162 Z" fill="#D97706" opacity="0.3"/>
+    <path d="M256,388 L386,166 C390,159 385,150 376,150 L318,150 C312,150 306,153 302,159 L238,272 L256,388 Z" fill="url(#rightWingGrad)"/>
+
+    <!-- Overlap Depth Shadow cast by Left Wing onto Right Wing -->
+    <path d="M242,265 L276,210 L310,270 L256,370 Z" fill="url(#foldShadow)"/>
+
+    <!-- Left Wing of V (Dominant Forward Ribbon - Pearl White to Pale Gold) -->
+    <path d="M126,150 C117,150 112,159 116,167 L236,382 C243,394 260,396 269,385 L286,362 L182,159 C178,153 172,150 166,150 Z" fill="url(#leftWingGrad)"/>
+
+    <!-- Bevel / Specular Highlight Edge on Left Wing -->
+    <path d="M126,152 L170,152 C174,152 178,155 181,159 L283,360 L273,372 L173,165 C170,160 165,157 160,157 L126,157 Z" fill="#FFFFFF" opacity="0.6"/>
+
+  </g>
+</svg>

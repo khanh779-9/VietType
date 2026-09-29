@@ -1,0 +1,70 @@
+<controls:VietTypeWindow x:Class="VietType.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:VietType.Controls"
+        xmlns:pages="clr-namespace:VietType.Pages"
+        Title="VietType" 
+        Width="800" Height="550" MinWidth="720" MinHeight="490"
+        WindowStartupLocation="CenterScreen"
+        Icon="/VietType;component/Resources/VietType.ico"
+        Loaded="Window_Loaded" Closing="Window_Closing">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="170"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar (Positioned below the TitleBar) -->
+        <Border Grid.Column="0"
+                Background="{DynamicResource SidebarBrush}"
+                Padding="12,12,12,12">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Top">
+                    <!-- Brand Header -->
+                    <Grid Height="44" Margin="2,0,2,14">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="38"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="AppLogoBadge" Width="36" Height="36" CornerRadius="9" Background="{DynamicResource AccentBrush}" VerticalAlignment="Center">
+                            <Path x:Name="AppLogoPath" Width="20" Height="20" Stretch="Uniform" Fill="White" Data="{StaticResource IconStateOn}"/>
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="9,0,0,0" VerticalAlignment="Center">
+                            <TextBlock Text="VietType" Foreground="White" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="Bộ gõ tiếng Việt" Foreground="#94A3B8" FontSize="9.5" Margin="0,1,0,0"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <controls:NavItem x:Name="NavDashboard" Text="Tổng quan" IconData="{StaticResource IconDashboard}" Click="NavDashboard_Click"/>
+                    <controls:NavItem x:Name="NavTyping" Text="Bộ gõ" IconData="{StaticResource IconKeyboard}" Click="NavTyping_Click"/>
+                    <controls:NavItem x:Name="NavHotkeys" Text="Phím tắt" IconData="{StaticResource IconHotkeys}" Click="NavHotkeys_Click"/>
+                    <controls:NavItem x:Name="NavShortcuts" Text="Gõ tắt" IconData="{StaticResource IconShortcut}" Click="NavShortcuts_Click"/>
+                    <controls:NavItem x:Name="NavAdvanced" Text="Nâng cao" IconData="{StaticResource IconAdvanced}" Click="NavAdvanced_Click"/>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Bottom">
+                    <controls:NavItem x:Name="NavAbout" Text="Về VietType" IconData="{StaticResource IconInfo}" Click="NavAbout_Click"/>
+                    <Border Margin="2,10,2,0" Padding="10,8" CornerRadius="8" Background="{DynamicResource SidebarHoverBrush}">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="{DynamicResource SuccessBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                            <StackPanel>
+                                <TextBlock Text="Trạng thái" Foreground="#94A3B8" FontSize="9"/>
+                                <TextBlock x:Name="SidebarStatusText" Text="Đang bật" Foreground="White" FontSize="11" FontWeight="SemiBold" Margin="0,1,0,0"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Main Pages Area -->
+        <controls:PageTabControl x:Name="PageTabs" Grid.Column="1" Background="Transparent" BorderThickness="0" SelectedIndex="0">
+            <TabItem Header="Tổng quan"><pages:HomePage x:Name="HomePage"/></TabItem>
+            <TabItem Header="Bộ gõ"><pages:InputPage x:Name="InputPage"/></TabItem>
+            <TabItem Header="Phím tắt"><pages:HotkeysPage x:Name="HotkeysPage"/></TabItem>
+            <TabItem Header="Gõ tắt"><pages:ShortcutsPage x:Name="ShortcutsPage"/></TabItem>
+            <TabItem Header="Nâng cao"><pages:AdvancedPage x:Name="AdvancedPage"/></TabItem>
+        </controls:PageTabControl>
+    </Grid>
+</controls:VietTypeWindow>

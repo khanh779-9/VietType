@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>VietType</AssemblyName>
+    <RootNamespace>VietType</RootNamespace>
+    <ApplicationIcon>Resources\VietType.ico</ApplicationIcon>
+    <Platforms>AnyCPU</Platforms>
+    <LangVersion>12.0</LangVersion>
+    <EnableDefaultApplicationDefinition>true</EnableDefaultApplicationDefinition>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Product>VietType</Product>
+    <Company>Khanh779-9</Company>
+    <Authors>Khanh779-9</Authors>
+    <Description>Vietnamese input method for Windows.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\VietType.ico" />
+    <Content Include="Resources\Documentation\UsageGuide.html" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Data\EncodingTables\*.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Match the nesting Visual Studio shows for WPF XAML and code-behind. -->
+    <Compile Update="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>

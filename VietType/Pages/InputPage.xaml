@@ -1,0 +1,38 @@
+<UserControl x:Class="VietType.Pages.InputPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:VietType.Controls">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="22,18,22,22">
+            <TextBlock Text="Bộ gõ" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Tinh chỉnh cách VietType xử lý tiếng Việt." Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,14"/>
+
+            <controls:SettingCard Title="Xử lý tiếng Việt">
+                <StackPanel>
+                    <TextBlock Text="Mức kiểm tra chính tả" Style="{StaticResource FieldLabelStyle}"/>
+                    <ComboBox x:Name="SpellCheckCombo" SelectionChanged="SpellCheckCombo_SelectionChanged">
+                        <ComboBoxItem Content="Không kiểm tra"/><ComboBoxItem Content="Cơ bản"/><ComboBoxItem Content="Nghiêm ngặt"/>
+                    </ComboBox>
+                    <CheckBox x:Name="ModernToneCheck" Content="Cho phép xử lý kiểu dấu hiện đại" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <CheckBox x:Name="StripToneAutoCheck" Content="Bỏ dấu khi tìm gợi ý" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                </StackPanel>
+            </controls:SettingCard>
+
+            <controls:SettingCard Title="Tương thích &amp; Hệ thống">
+                <StackPanel>
+                    <DockPanel LastChildFill="True">
+                        <TextBlock x:Name="AdminStatusBadge" DockPanel.Dock="Right" Text="(Đang chạy quyền Admin)" Foreground="{DynamicResource SuccessBrush}" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center" Visibility="Collapsed"/>
+                        <CheckBox x:Name="RunAsAdminCheck" Content="Chạy với quyền quản trị (Administrator)" Checked="RunAsAdmin_Click" Unchecked="RunAsAdmin_Click"/>
+                    </DockPanel>
+                    <TextBlock Text="Cần thiết để gõ tiếng Việt trong game và các phần mềm chạy quyền Admin." Style="{StaticResource SmallMutedTextStyle}" Margin="22,2,0,8"/>
+
+                    <CheckBox x:Name="SupportGamesCheck" Content="Hỗ trợ tốt cho các ứng dụng trò chơi (Games)" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <TextBlock Text="Đồng bộ hóa scan code phần cứng và bộ đệm khung hình cho DirectX / Game." Style="{StaticResource SmallMutedTextStyle}" Margin="22,2,0,8"/>
+
+                    <CheckBox x:Name="SupportMetroCheck" Content="Hỗ trợ tốt cho các ứng dụng Metro / UWP" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <TextBlock Text="Tương thích hoàn hảo Start Menu, Windows Search, Edge và Store Apps." Style="{StaticResource SmallMutedTextStyle}" Margin="22,2,0,0"/>
+                </StackPanel>
+            </controls:SettingCard>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
