@@ -68,6 +68,7 @@ public partial class MainWindow : VietTypeWindow
         _keyboardHook.OpenDashboardRequested += () => Dispatcher.Invoke(ShowFromTray);
         _keyboardHook.OpenShortcutsRequested += () => Dispatcher.Invoke(() => { ShowFromTray(); SelectPage(3); });
         _keyboardHook.ToggleShortcutsRequested += () => Dispatcher.Invoke(ToggleShortcutsState);
+        Platform.VietTypeStartupTask.Error += msg => OnHookError(this, msg);
 
         ShortcutsPage.ShortcutSelected += ShortcutGrid_SelectionChanged;
         ShortcutsPage.AddRequested += AddShortcut_Click;
@@ -845,6 +846,12 @@ public partial class MainWindow : VietTypeWindow
         else
         {
             SaveCurrentSettings();
+
+            // Vừa bật checkbox khi đã chạy elevated → đăng ký task ngay lập tức
+            // (CreateOrUpdate = kiểm tra chưa có thì tạo) để các lần chạy/restart
+            // sau không cần UAC.
+            if (requestAdmin)
+                Platform.VietTypeStartupTask.Register();
         }
     }
 

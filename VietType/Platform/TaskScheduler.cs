@@ -139,7 +139,21 @@ public sealed class TaskSchedulerManager : IDisposable
         }
     }
 
-    private dynamic Service => _service ??= TaskSchedulerCom.CreateService();
+    private dynamic Service
+    {
+        get
+        {
+            if (_service is null)
+            {
+                _service = TaskSchedulerCom.CreateService();
+                // Bắt buộc: COM instance tạo bởi CoCreateInstance CHƯA kết nối —
+                // phải gọi Connect() (không tham số = máy cục bộ, người dùng hiện tại)
+                // trước khi GetFolder/NewTask/... nếu không sẽ lỗi 0x800704E3.
+                _service.Connect();
+            }
+            return _service;
+        }
+    }
 
     // ------------------------------------------------------------
     // Tra cứu task
@@ -151,7 +165,10 @@ public sealed class TaskSchedulerManager : IDisposable
         ValidateTaskPath(taskPath);
         try
         {
-            return Service.GetTask(NormalizeTaskPath(taskPath));
+            // GetTask thuộc về ITaskFolder, KHÔNG phải ITaskService —
+            // phải lấy folder cha rồi gọi folder.GetTask(tên task).
+            dynamic folder = GetFolder(GetParentFolderPath(taskPath));
+            return folder.GetTask(GetLeafName(taskPath));
         }
         catch
         {
@@ -349,9 +366,6 @@ public sealed class TaskSchedulerManager : IDisposable
             throw new ArgumentException("Task name cannot contain a folder separator.", nameof(taskName));
     }
 
-    private static string NormalizeTaskPath(string taskPath) =>
-        taskPath.Replace('/', '\\').Trim();
-
     private static string NormalizeFolderPath(string folderPath)
     {
         if (string.IsNullOrWhiteSpace(folderPath))
@@ -408,6 +422,9 @@ public static class VietTypeStartupTask
 {
     private const string TaskName = "VietType";
 
+    /// <summary>Bắn ra khi đăng ký/xóa task thất bại — để tầng UI hiện vào log chẩn đoán.</summary>
+    public static event Action<string>? Error;
+
     private static TaskSchedulerManager? _manager;
     private static TaskSchedulerManager Manager => _manager ??= new TaskSchedulerManager();
 
@@ -455,8 +472,9 @@ public static class VietTypeStartupTask
 
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            Error?.Invoke($"Không đăng ký được task khởi động: {ex.Message}");
             return false;
         }
     }
@@ -469,9 +487,9 @@ public static class VietTypeStartupTask
             if (Manager.Exists(TaskName))
                 Manager.Delete(TaskName);
         }
-        catch
+        catch (Exception ex)
         {
-            // Bỏ qua lỗi xóa task (không chặn việc tắt khởi động).
+            Error?.Invoke($"Không xóa được task khởi động: {ex.Message}");
         }
     }
 
