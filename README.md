@@ -10,6 +10,7 @@
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6.svg)](https://microsoft.com/windows)
 [![WPF](https://img.shields.io/badge/UI-WPF%20XAML-00599E.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.1.0-green.svg)]()
 
 </div>
 
@@ -25,6 +26,7 @@ VietType là bộ gõ tiếng Việt được thiết kế và phát triển b�
 
 - **Giao diện Fluent tối giản và hiện đại**:
   - Hỗ trợ đầy đủ chủ đề Sáng (Light), Tối (Dark) và Tự động theo hệ thống Windows (Auto).
+  - Sidebar đồng bộ hoàn toàn với chủ đề: chuyển Light/Dark là toàn bộ màu sắc nền, icon, chữ và trạng thái chọn của sidebar cập nhật tức thì.
   - Bo góc tinh tế, phân tách bố cục rõ ràng theo từng trang chức năng.
 
 - **Hỗ trợ đầy đủ các kiểu gõ thông dụng**:
@@ -45,9 +47,27 @@ VietType là bộ gõ tiếng Việt được thiết kế và phát triển b�
 - **Gợi ý từ thông minh (Auto Complete)**:
   - Dự đoán và gợi ý từ vựng tiếng Việt nhanh chóng, hỗ trợ tăng tốc độ soạn thảo văn bản.
 
-- **Trang Gõ tắt và Phím tắt chuyên biệt**:
+- **Trang chuyên biệt cho từng tính năng**:
+  - Trang Tổng quan được tinh giản tối đa: bật/tắt bộ gõ, kiểu gõ, bảng mã, thử nhanh.
+  - Trang Phím tắt: tập trung toàn bộ thiết lập tổ hợp phím tại một nơi duy nhất.
   - Gõ tắt (Shortcuts / Macro): Tự động thay thế từ viết tắt thành văn bản hoàn chỉnh.
-  - Phím tắt (Hotkeys): Tùy biến tổ hợp phím chuyển đổi chế độ gõ và thao tác nhanh.
+
+- **Tổ hợp phím chức năng nhanh (F1 - F12)**:
+
+  | Phím | Chức năng |
+  |------|-----------|
+  | `F1` | Bật bộ gõ tiếng Việt |
+  | `F2` | Tắt bộ gõ tiếng Việt |
+  | `F3` | Chọn bảng mã Unicode |
+  | `F4` | Chuyển sang bảng mã kế tiếp |
+  | `F5` | Mở bảng điều khiển |
+  | `F6` | Bật / tắt kiểm tra chính tả |
+  | `F7` | Chèn ngày hiện tại (dd/MM/yyyy) |
+  | `F8` | Mở trang Gõ tắt |
+  | `F9` | Bật / tắt gõ tắt |
+  | `F12` | Reset bộ nhớ đệm bộ gõ |
+
+  - Mỗi phím có thể bật/tắt độc lập, phím bổ trợ (Ctrl + Shift + Alt) tùy chỉnh được, kèm thông báo balloon khi kích hoạt.
 
 - **Kiểm tra chính tả và phục hồi từ gốc**:
   - Nhận diện lỗi từ vựng tiếng Việt theo thời gian thực.
@@ -71,25 +91,25 @@ VietType/
 └── VietType/
     ├── VietType.csproj             # Dự án WPF .NET 8.0-windows
     ├── App.xaml / App.xaml.cs      # Điểm khởi chạy ứng dụng và quản lý vòng đời
-    ├── MainWindow.xaml / .cs       # Cửa sổ chính, Navigation, Tray Icon Menu
-    ├── Core/                       # Bộ lõi xử lý gõ phím và giải thuật tiếng Việt
-    │   ├── Engine/                 # Keyboard hook, engine xử lý phím
-    │   ├── Models/                 # Dữ liệu từ điển, cấu hình gõ
-    │   └── Encodings/              # Logic chuyển đổi ký tự và mã hóa
-    ├── Controls/                   # Các Custom Control và giao diện người dùng
-    ├── Pages/                      # Các trang cấu hình giao diện
-    │   ├── HomePage.xaml           # Bảng điều khiển chính (Kiểu gõ, Bảng mã)
+    ├── MainWindow.xaml / .cs       # Cửa sổ chính, Sidebar Navigation, Tray Icon Menu
+    ├── AboutWindow.xaml / .cs      # Cửa sổ Giới thiệu
+    ├── Core/
+    │   ├── Typing/                 # Engine xử lý phím, giải thuật tiếng Việt
+    │   └── Models/                 # Cấu hình ứng dụng, dữ liệu phím tắt
+    ├── Controls/                   # Custom Control (NavItem, SettingCard, ToggleSwitch, ...)
+    ├── Pages/
+    │   ├── HomePage.xaml           # Tổng quan (Kiểu gõ, Bảng mã, Thử nhanh)
+    │   ├── InputPage.xaml          # Tinh chỉnh xử lý tiếng Việt, tương thích hệ thống
+    │   ├── HotkeysPage.xaml        # Cài đặt tổ hợp phím tắt và F-key chức năng
     │   ├── ShortcutsPage.xaml      # Quản lý danh sách gõ tắt (Macro)
-    │   ├── HotkeysPage.xaml        # Cài đặt tổ hợp phím tắt chức năng
-    │   ├── InputPage.xaml          # Tùy chọn gõ và gợi ý từ vựng
-    │   ├── AdvancedPage.xaml       # Cấu hình nâng cao, khởi động cùng Windows
+    │   ├── AdvancedPage.xaml       # Cấu hình nâng cao, Theme, khởi động cùng Windows
     │   └── AboutPage.xaml          # Thông tin tác giả và bản quyền
     ├── Data/
     │   └── EncodingTables/         # Tập hợp 17 bảng mã tiếng Việt
     ├── Infrastructure/             # Lưu trữ cài đặt, Registry, IO
-    ├── Platform/                   # Win32 API, Elevation Helper
-    ├── Themes/                     # Bộ màu, Style XAML, Light/Dark Mode
-    └── Resources/                  # Vector icon SVG, font chữ, logo ứng dụng
+    ├── Platform/                   # Keyboard hook (Win32 API), Elevation Helper
+    ├── Themes/                     # Bộ màu Light/Dark Mode, Style XAML, ThemeManager
+    └── Resources/                  # Vector icon SVG, logo ứng dụng, tài liệu
 ```
 
 ---

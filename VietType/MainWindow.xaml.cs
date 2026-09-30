@@ -53,10 +53,6 @@ public partial class MainWindow : VietTypeWindow
         HomePage.CodeTableChanged += CodeTableCombo_Changed;
         HomePage.PreviewChanged += PreviewInput_TextChanged;
         HomePage.SettingsChanged += SettingCheck_Changed;
-        HomePage.QuickToggleChanged += QuickToggleCombo_SelectionChanged;
-        HomePage.QuickMethodChanged += QuickMethodCombo_SelectionChanged;
-        HomePage.QuickRestoreChanged += QuickRestoreCombo_SelectionChanged;
-        HomePage.CustomizeHotkeysRequested += (_, _) => SelectPage(2);
 
         InputPage.SpellCheckChanged += SpellCheckCombo_Changed;
         InputPage.SettingsChanged += SettingCheck_Changed;
@@ -67,6 +63,8 @@ public partial class MainWindow : VietTypeWindow
 
         _keyboardHook.SwitchTypingMethodRequested += () => Dispatcher.Invoke(CycleTypingMethod);
         _keyboardHook.SelectUnicodeRequested += () => Dispatcher.Invoke(SelectUnicodeTable);
+        _keyboardHook.CycleCodeTableRequested += () => Dispatcher.Invoke(CycleCodeTable);
+        _keyboardHook.ToggleSpellCheckRequested += () => Dispatcher.Invoke(ToggleSpellCheck);
         _keyboardHook.OpenDashboardRequested += () => Dispatcher.Invoke(ShowFromTray);
         _keyboardHook.OpenShortcutsRequested += () => Dispatcher.Invoke(() => { ShowFromTray(); SelectPage(3); });
         _keyboardHook.ToggleShortcutsRequested += () => Dispatcher.Invoke(ToggleShortcutsState);
@@ -201,12 +199,13 @@ public partial class MainWindow : VietTypeWindow
         HotkeysPage.QuickF1.IsChecked = settings.QuickF1;
         HotkeysPage.QuickF2.IsChecked = settings.QuickF2;
         HotkeysPage.QuickF3.IsChecked = settings.QuickF3;
+        HotkeysPage.QuickF4.IsChecked = settings.QuickF4;
         HotkeysPage.QuickF5.IsChecked = settings.QuickF5;
+        HotkeysPage.QuickF6.IsChecked = settings.QuickF6;
+        HotkeysPage.QuickF7.IsChecked = settings.QuickF7;
         HotkeysPage.QuickF8.IsChecked = settings.QuickF8;
         HotkeysPage.QuickF9.IsChecked = settings.QuickF9;
         HotkeysPage.QuickF12.IsChecked = settings.QuickF12;
-
-        UpdateQuickHotkeyCombos();
     }
 
     private static int Clamp(int value, int min, int max) => Math.Min(Math.Max(value, min), max);
@@ -682,7 +681,6 @@ public partial class MainWindow : VietTypeWindow
         {
             ApplySettingsToEngine();
             SaveCurrentSettings();
-            UpdateQuickHotkeyCombos();
         }
     }
 
@@ -695,196 +693,6 @@ public partial class MainWindow : VietTypeWindow
         {
             ApplySettingsToEngine();
             SaveCurrentSettings();
-            UpdateQuickHotkeyCombos();
-        }
-    }
-
-    private void QuickToggleCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (_loading || HomePage.QuickToggleCombo.SelectedIndex < 0) return;
-        _loading = true;
-        switch (HomePage.QuickToggleCombo.SelectedIndex)
-        {
-            case 0: // Ctrl + Shift
-                HotkeysPage.ToggleCtrl.IsChecked = true;
-                HotkeysPage.ToggleShift.IsChecked = true;
-                HotkeysPage.ToggleAlt.IsChecked = false;
-                HotkeysPage.ToggleWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.ToggleKey, "(Không dùng phím)");
-                break;
-            case 1: // Alt + Z
-                HotkeysPage.ToggleCtrl.IsChecked = false;
-                HotkeysPage.ToggleShift.IsChecked = false;
-                HotkeysPage.ToggleAlt.IsChecked = true;
-                HotkeysPage.ToggleWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.ToggleKey, "Z");
-                break;
-            case 2: // Ctrl + ~
-                HotkeysPage.ToggleCtrl.IsChecked = true;
-                HotkeysPage.ToggleShift.IsChecked = false;
-                HotkeysPage.ToggleAlt.IsChecked = false;
-                HotkeysPage.ToggleWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.ToggleKey, "~");
-                break;
-            case 3: // Win + Space
-                HotkeysPage.ToggleCtrl.IsChecked = false;
-                HotkeysPage.ToggleShift.IsChecked = false;
-                HotkeysPage.ToggleAlt.IsChecked = false;
-                HotkeysPage.ToggleWin.IsChecked = true;
-                SetComboSelection(HotkeysPage.ToggleKey, "Space");
-                break;
-            case 4: // Tùy chỉnh...
-                _loading = false;
-                SelectPage(2);
-                return;
-        }
-        _loading = false;
-        ApplySettingsToEngine();
-        SaveCurrentSettings();
-    }
-
-    private void QuickMethodCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (_loading || HomePage.QuickMethodCombo.SelectedIndex < 0) return;
-        _loading = true;
-        switch (HomePage.QuickMethodCombo.SelectedIndex)
-        {
-            case 0: // Alt + Z
-                HotkeysPage.MethodCtrl.IsChecked = false;
-                HotkeysPage.MethodShift.IsChecked = false;
-                HotkeysPage.MethodAlt.IsChecked = true;
-                HotkeysPage.MethodWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.MethodKey, "Z");
-                break;
-            case 1: // Alt + Shift + Z
-                HotkeysPage.MethodCtrl.IsChecked = false;
-                HotkeysPage.MethodShift.IsChecked = true;
-                HotkeysPage.MethodAlt.IsChecked = true;
-                HotkeysPage.MethodWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.MethodKey, "Z");
-                break;
-            case 2: // Ctrl + Shift + F
-                HotkeysPage.MethodCtrl.IsChecked = true;
-                HotkeysPage.MethodShift.IsChecked = true;
-                HotkeysPage.MethodAlt.IsChecked = false;
-                HotkeysPage.MethodWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.MethodKey, "F");
-                break;
-            case 3: // (Tắt)
-                HotkeysPage.MethodCtrl.IsChecked = false;
-                HotkeysPage.MethodShift.IsChecked = false;
-                HotkeysPage.MethodAlt.IsChecked = false;
-                HotkeysPage.MethodWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.MethodKey, "(Tắt)");
-                break;
-            case 4: // Tùy chỉnh...
-                _loading = false;
-                SelectPage(2);
-                return;
-        }
-        _loading = false;
-        ApplySettingsToEngine();
-        SaveCurrentSettings();
-    }
-
-    private void QuickRestoreCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (_loading || HomePage.QuickRestoreCombo.SelectedIndex < 0) return;
-        _loading = true;
-        switch (HomePage.QuickRestoreCombo.SelectedIndex)
-        {
-            case 0: // Ctrl + Shift + Z
-                HotkeysPage.RestoreCtrl.IsChecked = true;
-                HotkeysPage.RestoreShift.IsChecked = true;
-                HotkeysPage.RestoreAlt.IsChecked = false;
-                HotkeysPage.RestoreWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.RestoreKey, "Z");
-                break;
-            case 1: // Alt + R
-                HotkeysPage.RestoreCtrl.IsChecked = false;
-                HotkeysPage.RestoreShift.IsChecked = false;
-                HotkeysPage.RestoreAlt.IsChecked = true;
-                HotkeysPage.RestoreWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.RestoreKey, "R");
-                break;
-            case 2: // (Tắt)
-                HotkeysPage.RestoreCtrl.IsChecked = false;
-                HotkeysPage.RestoreShift.IsChecked = false;
-                HotkeysPage.RestoreAlt.IsChecked = false;
-                HotkeysPage.RestoreWin.IsChecked = false;
-                SetComboSelection(HotkeysPage.RestoreKey, "(Tắt)");
-                break;
-            case 3: // Tùy chỉnh...
-                _loading = false;
-                SelectPage(2);
-                return;
-        }
-        _loading = false;
-        ApplySettingsToEngine();
-        SaveCurrentSettings();
-    }
-
-    private void UpdateQuickHotkeyCombos()
-    {
-        bool prevLoading = _loading;
-        _loading = true;
-        try
-        {
-            // 1. Phím chuyển E/V
-            bool tCtrl = HotkeysPage.ToggleCtrl.IsChecked == true;
-            bool tShift = HotkeysPage.ToggleShift.IsChecked == true;
-            bool tAlt = HotkeysPage.ToggleAlt.IsChecked == true;
-            bool tWin = HotkeysPage.ToggleWin.IsChecked == true;
-            string tKey = GetSelectedKey(HotkeysPage.ToggleKey, "(Không dùng phím)");
-
-            if (tCtrl && tShift && !tAlt && !tWin && string.IsNullOrEmpty(tKey))
-                HomePage.QuickToggleCombo.SelectedIndex = 0;
-            else if (!tCtrl && !tShift && tAlt && !tWin && tKey == "Z")
-                HomePage.QuickToggleCombo.SelectedIndex = 1;
-            else if (tCtrl && !tShift && !tAlt && !tWin && tKey == "~")
-                HomePage.QuickToggleCombo.SelectedIndex = 2;
-            else if (!tCtrl && !tShift && !tAlt && tWin && tKey == "Space")
-                HomePage.QuickToggleCombo.SelectedIndex = 3;
-            else
-                HomePage.QuickToggleCombo.SelectedIndex = 4;
-
-            // 2. Chuyển kiểu gõ
-            bool mCtrl = HotkeysPage.MethodCtrl.IsChecked == true;
-            bool mShift = HotkeysPage.MethodShift.IsChecked == true;
-            bool mAlt = HotkeysPage.MethodAlt.IsChecked == true;
-            bool mWin = HotkeysPage.MethodWin.IsChecked == true;
-            string mKey = GetSelectedKey(HotkeysPage.MethodKey, "(Tắt)");
-
-            if (!mCtrl && !mShift && mAlt && !mWin && mKey == "Z")
-                HomePage.QuickMethodCombo.SelectedIndex = 0;
-            else if (!mCtrl && mShift && mAlt && !mWin && mKey == "Z")
-                HomePage.QuickMethodCombo.SelectedIndex = 1;
-            else if (mCtrl && mShift && !mAlt && !mWin && mKey == "F")
-                HomePage.QuickMethodCombo.SelectedIndex = 2;
-            else if (string.IsNullOrEmpty(mKey) && !mCtrl && !mShift && !mAlt && !mWin)
-                HomePage.QuickMethodCombo.SelectedIndex = 3;
-            else
-                HomePage.QuickMethodCombo.SelectedIndex = 4;
-
-            // 3. Phục hồi từ gốc
-            bool rCtrl = HotkeysPage.RestoreCtrl.IsChecked == true;
-            bool rShift = HotkeysPage.RestoreShift.IsChecked == true;
-            bool rAlt = HotkeysPage.RestoreAlt.IsChecked == true;
-            bool rWin = HotkeysPage.RestoreWin.IsChecked == true;
-            string rKey = GetSelectedKey(HotkeysPage.RestoreKey, "(Tắt)");
-
-            if (rCtrl && rShift && !rAlt && !rWin && rKey == "Z")
-                HomePage.QuickRestoreCombo.SelectedIndex = 0;
-            else if (!rCtrl && !rShift && rAlt && !rWin && rKey == "R")
-                HomePage.QuickRestoreCombo.SelectedIndex = 1;
-            else if (string.IsNullOrEmpty(rKey) && !rCtrl && !rShift && !rAlt && !rWin)
-                HomePage.QuickRestoreCombo.SelectedIndex = 2;
-            else
-                HomePage.QuickRestoreCombo.SelectedIndex = 3;
-        }
-        finally
-        {
-            _loading = prevLoading;
         }
     }
 
@@ -928,6 +736,23 @@ public partial class MainWindow : VietTypeWindow
             }
         }
         ShowBalloonNotification("VietType - Bảng mã", "Đã chọn Bảng mã Unicode dựng sẵn.");
+    }
+
+    private void CycleCodeTable()
+    {
+        if (HomePage.CodeTable.Items.Count == 0) return;
+        int next = (Math.Max(0, HomePage.CodeTable.SelectedIndex) + 1) % HomePage.CodeTable.Items.Count;
+        HomePage.CodeTable.SelectedIndex = next;
+        string name = (HomePage.CodeTable.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Unicode";
+        ShowBalloonNotification("VietType - Bảng mã", $"Đã chuyển sang bảng mã: {name}");
+    }
+
+    private void ToggleSpellCheck()
+    {
+        int next = InputPage.SpellCheck.SelectedIndex > 0 ? 0 : 1;
+        InputPage.SpellCheck.SelectedIndex = next;
+        string name = next switch { 1 => "Cơ bản", 2 => "Nghiêm ngặt", _ => "Không kiểm tra" };
+        ShowBalloonNotification("VietType - Chính tả", $"Mức kiểm tra chính tả: {name}");
     }
 
     private void ToggleShortcutsState()
@@ -1038,7 +863,10 @@ public partial class MainWindow : VietTypeWindow
         _keyboardHook.QuickF1 = HotkeysPage.QuickF1.IsChecked == true;
         _keyboardHook.QuickF2 = HotkeysPage.QuickF2.IsChecked == true;
         _keyboardHook.QuickF3 = HotkeysPage.QuickF3.IsChecked == true;
+        _keyboardHook.QuickF4 = HotkeysPage.QuickF4.IsChecked == true;
         _keyboardHook.QuickF5 = HotkeysPage.QuickF5.IsChecked == true;
+        _keyboardHook.QuickF6 = HotkeysPage.QuickF6.IsChecked == true;
+        _keyboardHook.QuickF7 = HotkeysPage.QuickF7.IsChecked == true;
         _keyboardHook.QuickF8 = HotkeysPage.QuickF8.IsChecked == true;
         _keyboardHook.QuickF9 = HotkeysPage.QuickF9.IsChecked == true;
         _keyboardHook.QuickF12 = HotkeysPage.QuickF12.IsChecked == true;
@@ -1114,7 +942,10 @@ public partial class MainWindow : VietTypeWindow
                 QuickF1 = HotkeysPage.QuickF1.IsChecked == true,
                 QuickF2 = HotkeysPage.QuickF2.IsChecked == true,
                 QuickF3 = HotkeysPage.QuickF3.IsChecked == true,
+                QuickF4 = HotkeysPage.QuickF4.IsChecked == true,
                 QuickF5 = HotkeysPage.QuickF5.IsChecked == true,
+                QuickF6 = HotkeysPage.QuickF6.IsChecked == true,
+                QuickF7 = HotkeysPage.QuickF7.IsChecked == true,
                 QuickF8 = HotkeysPage.QuickF8.IsChecked == true,
                 QuickF9 = HotkeysPage.QuickF9.IsChecked == true,
                 QuickF12 = HotkeysPage.QuickF12.IsChecked == true

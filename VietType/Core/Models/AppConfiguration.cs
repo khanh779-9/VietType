@@ -38,7 +38,10 @@ public sealed class AppConfiguration
     public bool QuickF1 { get; set; } = true;
     public bool QuickF2 { get; set; } = true;
     public bool QuickF3 { get; set; } = true;
+    public bool QuickF4 { get; set; } = true;
     public bool QuickF5 { get; set; } = true;
+    public bool QuickF6 { get; set; } = true;
+    public bool QuickF7 { get; set; } = true;
     public bool QuickF8 { get; set; } = true;
     public bool QuickF9 { get; set; } = true;
     public bool QuickF12 { get; set; } = true;

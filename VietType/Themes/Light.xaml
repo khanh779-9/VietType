@@ -3,8 +3,14 @@
     <SolidColorBrush x:Key="WindowBrush" Color="#F5F7FB"/>
     <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="SurfaceAltBrush" Color="#F8FAFC"/>
-    <SolidColorBrush x:Key="SidebarBrush" Color="#101828"/>
-    <SolidColorBrush x:Key="SidebarHoverBrush" Color="#1D2939"/>
+    <SolidColorBrush x:Key="SidebarBrush" Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="SidebarHoverBrush" Color="#EFF6FF"/>
+    <SolidColorBrush x:Key="SidebarItemHoverBrush" Color="#F1F5F9"/>
+    <SolidColorBrush x:Key="SidebarIconBrush" Color="#667085"/>
+    <SolidColorBrush x:Key="SidebarIconHoverBrush" Color="#344054"/>
+    <SolidColorBrush x:Key="SidebarTextBrush" Color="#475467"/>
+    <SolidColorBrush x:Key="SidebarTextHoverBrush" Color="#101828"/>
+    <SolidColorBrush x:Key="SidebarTextActiveBrush" Color="#2563EB"/>
     <SolidColorBrush x:Key="MenuHoverBrush" Color="#EFF6FF"/>
     <SolidColorBrush x:Key="TextBrush" Color="#101828"/>
     <SolidColorBrush x:Key="MutedTextBrush" Color="#667085"/>

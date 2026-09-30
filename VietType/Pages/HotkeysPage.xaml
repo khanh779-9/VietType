@@ -87,14 +87,18 @@
                         <Border Background="{DynamicResource SurfaceAltBrush}" CornerRadius="8" Padding="12,10" Margin="0,2,0,0">
                             <UniformGrid Columns="3">
                                 <CheckBox x:Name="HkQuickF1" Content="F1 (Bật TV)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF2" Content="F2 (Tắt TV)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF3" Content="F3 (Mã Unicode)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+
+                                <CheckBox x:Name="HkQuickF4" Content="F4 (Chuyển bảng mã)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
                                 <CheckBox x:Name="HkQuickF5" Content="F5 (Bảng điều khiển)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF6" Content="F6 (Kiểm tra chính tả)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+
+                                <CheckBox x:Name="HkQuickF7" Content="F7 (Chèn ngày)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
+                                <CheckBox x:Name="HkQuickF8" Content="F8 (Bảng gõ tắt)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
                                 <CheckBox x:Name="HkQuickF9" Content="F9 (Bật/Tắt gõ tắt)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
 
-                                <CheckBox x:Name="HkQuickF2" Content="F2 (Tắt TV)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
-                                <CheckBox x:Name="HkQuickF8" Content="F8 (Bảng gõ tắt)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
                                 <CheckBox x:Name="HkQuickF12" Content="F12 (Reset / Khôi phục)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
-
-                                <CheckBox x:Name="HkQuickF3" Content="F3 (Mã Unicode)" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,3,6,3"/>
                             </UniformGrid>
                         </Border>
                     </StackPanel>

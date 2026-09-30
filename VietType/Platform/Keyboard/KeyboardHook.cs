@@ -81,13 +81,18 @@ public sealed class KeyboardHook : IDisposable
     public bool QuickF1 { get; set; } = true;
     public bool QuickF2 { get; set; } = true;
     public bool QuickF3 { get; set; } = true;
+    public bool QuickF4 { get; set; } = true;
     public bool QuickF5 { get; set; } = true;
+    public bool QuickF6 { get; set; } = true;
+    public bool QuickF7 { get; set; } = true;
     public bool QuickF8 { get; set; } = true;
     public bool QuickF9 { get; set; } = true;
     public bool QuickF12 { get; set; } = true;
 
     public event Action? SwitchTypingMethodRequested;
     public event Action? SelectUnicodeRequested;
+    public event Action? CycleCodeTableRequested;
+    public event Action? ToggleSpellCheckRequested;
     public event Action? OpenDashboardRequested;
     public event Action? OpenShortcutsRequested;
     public event Action? ToggleShortcutsRequested;
@@ -329,13 +334,6 @@ public sealed class KeyboardHook : IDisposable
             return true;
         }
 
-        // Dự phòng Ctrl + `
-        if (ctrl && !shift && !alt && !win && vkCode == NativeMethods.VK_OEM_3)
-        {
-            ToggleEnabled();
-            return true;
-        }
-
         // 2. Phím chuyển kiểu gõ (Telex / VNI / VIQR)
         if (MatchHotkey(HotkeySwitchMethod, ctrl, shift, alt, win, vkCode))
         {
@@ -375,8 +373,20 @@ public sealed class KeyboardHook : IDisposable
                     SelectUnicodeRequested?.Invoke();
                     return true;
 
+                case 0x73 when QuickF4: // F4: Chuyển bảng mã kế tiếp
+                    CycleCodeTableRequested?.Invoke();
+                    return true;
+
                 case 0x74 when QuickF5: // F5: Mở bảng điều khiển
                     OpenDashboardRequested?.Invoke();
+                    return true;
+
+                case 0x75 when QuickF6: // F6: Bật / tắt kiểm tra chính tả
+                    ToggleSpellCheckRequested?.Invoke();
+                    return true;
+
+                case 0x76 when QuickF7: // F7: Chèn ngày hiện tại
+                    SendReplacement(0, DateTime.Now.ToString("dd/MM/yyyy"));
                     return true;
 
                 case 0x77 when QuickF8: // F8: Mở bảng gõ tắt

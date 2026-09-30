@@ -5,6 +5,12 @@
     <SolidColorBrush x:Key="SurfaceAltBrush" Color="#172033"/>
     <SolidColorBrush x:Key="SidebarBrush" Color="#080D18"/>
     <SolidColorBrush x:Key="SidebarHoverBrush" Color="#182234"/>
+    <SolidColorBrush x:Key="SidebarItemHoverBrush" Color="#24FFFFFF"/>
+    <SolidColorBrush x:Key="SidebarIconBrush" Color="#94A3B8"/>
+    <SolidColorBrush x:Key="SidebarIconHoverBrush" Color="#CBD5E1"/>
+    <SolidColorBrush x:Key="SidebarTextBrush" Color="#98A2B3"/>
+    <SolidColorBrush x:Key="SidebarTextHoverBrush" Color="#F8FAFC"/>
+    <SolidColorBrush x:Key="SidebarTextActiveBrush" Color="#60A5FA"/>
     <SolidColorBrush x:Key="MenuHoverBrush" Color="#1E293B"/>
     <SolidColorBrush x:Key="TextBrush" Color="#F8FAFC"/>
     <SolidColorBrush x:Key="MutedTextBrush" Color="#98A2B3"/>

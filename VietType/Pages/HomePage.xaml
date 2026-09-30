@@ -4,7 +4,7 @@
              xmlns:controls="clr-namespace:VietType.Controls">
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="22,18,22,22">
-            <TextBlock Text="Bộ gõ tiếng Việt" Style="{StaticResource PageTitleStyle}"/>
+            <TextBlock Text="Tổng quan" Style="{StaticResource PageTitleStyle}"/>
             <TextBlock Text="Cấu hình nhanh và kiểm tra bộ gõ." Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,14"/>
 
             <Border Style="{StaticResource CardStyle}">
@@ -56,61 +56,6 @@
                     </Border>
                 </Grid>
             </Border>
-
-            <DockPanel LastChildFill="False" Margin="0,10,0,8">
-                <TextBlock Text="Phím tắt nhanh" Style="{StaticResource SectionTitleStyle}" VerticalAlignment="Center"/>
-                <Button x:Name="CustomizeHotkeysButton" DockPanel.Dock="Right" Content="Thiết lập chi tiết →" Click="CustomizeHotkeys_Click" Style="{StaticResource LinkButtonStyle}" FontSize="12" VerticalAlignment="Center"/>
-            </DockPanel>
-            <Grid Margin="0,0,0,4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="10"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Card 1: Bật / tắt E/V -->
-                <Border Style="{StaticResource CompactCardStyle}" Padding="12,10">
-                    <StackPanel>
-                        <TextBlock Text="Bật / tắt bộ gõ (E/V)" Style="{StaticResource SmallMutedTextStyle}" Margin="0,0,0,6"/>
-                        <ComboBox x:Name="QuickToggleHotkeyCombo" SelectionChanged="QuickToggleCombo_Changed">
-                            <ComboBoxItem Content="Ctrl + Shift"/>
-                            <ComboBoxItem Content="Alt + Z"/>
-                            <ComboBoxItem Content="Ctrl + ~"/>
-                            <ComboBoxItem Content="Win + Space"/>
-                            <ComboBoxItem Content="Tùy chỉnh..."/>
-                        </ComboBox>
-                    </StackPanel>
-                </Border>
-
-                <!-- Card 2: Chuyển kiểu gõ -->
-                <Border Grid.Column="2" Style="{StaticResource CompactCardStyle}" Padding="12,10">
-                    <StackPanel>
-                        <TextBlock Text="Chuyển kiểu gõ" Style="{StaticResource SmallMutedTextStyle}" Margin="0,0,0,6"/>
-                        <ComboBox x:Name="QuickMethodHotkeyCombo" SelectionChanged="QuickMethodCombo_Changed">
-                            <ComboBoxItem Content="Alt + Z"/>
-                            <ComboBoxItem Content="Alt + Shift + Z"/>
-                            <ComboBoxItem Content="Ctrl + Shift + F"/>
-                            <ComboBoxItem Content="(Tắt)"/>
-                            <ComboBoxItem Content="Tùy chỉnh..."/>
-                        </ComboBox>
-                    </StackPanel>
-                </Border>
-
-                <!-- Card 3: Phục hồi từ gốc -->
-                <Border Grid.Column="4" Style="{StaticResource CompactCardStyle}" Padding="12,10">
-                    <StackPanel>
-                        <TextBlock Text="Phục hồi từ gốc" Style="{StaticResource SmallMutedTextStyle}" Margin="0,0,0,6"/>
-                        <ComboBox x:Name="QuickRestoreHotkeyCombo" SelectionChanged="QuickRestoreCombo_Changed">
-                            <ComboBoxItem Content="Ctrl + Shift + Z"/>
-                            <ComboBoxItem Content="Alt + R"/>
-                            <ComboBoxItem Content="(Tắt)"/>
-                            <ComboBoxItem Content="Tùy chỉnh..."/>
-                        </ComboBox>
-                    </StackPanel>
-                </Border>
-            </Grid>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

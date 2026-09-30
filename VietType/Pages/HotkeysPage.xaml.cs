@@ -54,7 +54,10 @@ public partial class HotkeysPage : UserControl
     public CheckBox QuickF1 => HkQuickF1;
     public CheckBox QuickF2 => HkQuickF2;
     public CheckBox QuickF3 => HkQuickF3;
+    public CheckBox QuickF4 => HkQuickF4;
     public CheckBox QuickF5 => HkQuickF5;
+    public CheckBox QuickF6 => HkQuickF6;
+    public CheckBox QuickF7 => HkQuickF7;
     public CheckBox QuickF8 => HkQuickF8;
     public CheckBox QuickF9 => HkQuickF9;
     public CheckBox QuickF12 => HkQuickF12;

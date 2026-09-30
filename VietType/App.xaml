@@ -28,12 +28,6 @@
                 <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}"/>
             </Style>
 
-            <Style x:Key="SectionTitleStyle" TargetType="TextBlock">
-                <Setter Property="FontSize" Value="13.5"/>
-                <Setter Property="FontWeight" Value="SemiBold"/>
-                <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-            </Style>
-
             <Style x:Key="CardCaptionStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="11"/>
                 <Setter Property="FontWeight" Value="SemiBold"/>

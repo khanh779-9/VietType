@@ -4,12 +4,22 @@
              Height="38" Margin="0,2">
     <Border x:Name="Root"
             CornerRadius="8"
-            Background="Transparent"
             Padding="10,0"
             Cursor="Hand"
-            MouseLeftButtonUp="Root_MouseLeftButtonUp"
-            MouseEnter="Root_MouseEnter"
-            MouseLeave="Root_MouseLeave">
+            MouseLeftButtonUp="Root_MouseLeftButtonUp">
+        <Border.Style>
+            <Style TargetType="Border">
+                <Setter Property="Background" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SidebarItemHoverBrush}"/>
+                    </Trigger>
+                    <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                        <Setter Property="Background" Value="{DynamicResource SidebarHoverBrush}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="22"/>
@@ -22,26 +32,63 @@
                     CornerRadius="1.5"
                     Background="{DynamicResource AccentBrush}"
                     HorizontalAlignment="Left"
-                    Margin="-10,0,0,0"
-                    Visibility="Collapsed"/>
+                    Margin="-10,0,0,0">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
 
             <!-- Icon -->
             <Path x:Name="Icon"
                   Width="16" Height="16"
                   Stretch="Uniform"
-                  Fill="#8E9EB4"
                   HorizontalAlignment="Center"
-                  VerticalAlignment="Center"/>
+                  VerticalAlignment="Center">
+                <Path.Style>
+                    <Style TargetType="Path">
+                        <Setter Property="Fill" Value="{DynamicResource SidebarIconBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=Root}" Value="True">
+                                <Setter Property="Fill" Value="{DynamicResource SidebarIconHoverBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                <Setter Property="Fill" Value="{DynamicResource AccentBrush}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
 
             <!-- Text -->
             <TextBlock x:Name="LabelText"
                        Grid.Column="1"
                        VerticalAlignment="Center"
                        FontSize="13"
-                       FontWeight="Medium"
-                       Foreground="#94A3B8"
                        Margin="10,0,0,0"
-                       Text="Menu"/>
+                       Text="Menu">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="FontWeight" Value="Medium"/>
+                        <Setter Property="Foreground" Value="{DynamicResource SidebarTextBrush}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=Root}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource SidebarTextHoverBrush}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=UserControl}}" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource SidebarTextActiveBrush}"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
         </Grid>
     </Border>
 </UserControl>

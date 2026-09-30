@@ -18,6 +18,8 @@
         <!-- Sidebar (Positioned below the TitleBar) -->
         <Border Grid.Column="0"
                 Background="{DynamicResource SidebarBrush}"
+                BorderBrush="{DynamicResource BorderBrushSoft}"
+                BorderThickness="0,0,1,0"
                 Padding="12,12,12,12">
             <DockPanel>
                 <StackPanel DockPanel.Dock="Top">
@@ -28,11 +30,11 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Border x:Name="AppLogoBadge" Width="36" Height="36" CornerRadius="9" Background="{DynamicResource AccentBrush}" VerticalAlignment="Center">
-                            <Path x:Name="AppLogoPath" Width="20" Height="20" Stretch="Uniform" Fill="White" Data="{StaticResource IconStateOn}"/>
+                            <Path x:Name="AppLogoPath" Width="20" Height="20" Stretch="Uniform" Fill="{DynamicResource InverseTextBrush}" Data="{StaticResource IconStateOn}"/>
                         </Border>
                         <StackPanel Grid.Column="1" Margin="9,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Text="VietType" Foreground="White" FontSize="14" FontWeight="Bold"/>
-                            <TextBlock Text="Bộ gõ tiếng Việt" Foreground="#94A3B8" FontSize="9.5" Margin="0,1,0,0"/>
+                            <TextBlock Text="VietType" Foreground="{DynamicResource SidebarTextActiveBrush}" FontSize="14" FontWeight="Bold"/>
+                            <TextBlock Text="Bộ gõ tiếng Việt" Foreground="{DynamicResource SidebarTextBrush}" FontSize="9.5" Margin="0,1,0,0"/>
                         </StackPanel>
                     </Grid>
 
@@ -49,8 +51,8 @@
                         <StackPanel Orientation="Horizontal">
                             <Ellipse x:Name="StatusDot" Width="7" Height="7" Fill="{DynamicResource SuccessBrush}" VerticalAlignment="Center" Margin="0,0,8,0"/>
                             <StackPanel>
-                                <TextBlock Text="Trạng thái" Foreground="#94A3B8" FontSize="9"/>
-                                <TextBlock x:Name="SidebarStatusText" Text="Đang bật" Foreground="White" FontSize="11" FontWeight="SemiBold" Margin="0,1,0,0"/>
+                                <TextBlock Text="Trạng thái" Foreground="{DynamicResource SidebarTextBrush}" FontSize="9"/>
+                                <TextBlock x:Name="SidebarStatusText" Text="Đang bật" Foreground="{DynamicResource SidebarTextActiveBrush}" FontSize="11" FontWeight="SemiBold" Margin="0,1,0,0"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
