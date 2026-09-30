@@ -10,7 +10,7 @@
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6.svg)](https://microsoft.com/windows)
 [![WPF](https://img.shields.io/badge/UI-WPF%20XAML-00599E.svg)]()
-[![Version](https://img.shields.io/badge/Version-1.1.0-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.2.0-green.svg)]()
 
 </div>
 
@@ -52,6 +52,11 @@ VietType là bộ gõ tiếng Việt được thiết kế và phát triển b�
   - Trang Phím tắt: tập trung toàn bộ thiết lập tổ hợp phím tại một nơi duy nhất.
   - Gõ tắt (Shortcuts / Macro): Tự động thay thế từ viết tắt thành văn bản hoàn chỉnh.
 
+- **Âm thanh và thông báo phản hồi**:
+  - Âm thanh ngắn tổng hợp ngay trong ứng dụng (sine wave, không cần file .wav): chime đi lên khi bật bộ gõ, đi xuống khi tắt, tick trung tính khi chuyển kiểu gõ/bảng mã.
+  - Balloon thông báo cho mọi thao tác: bật/tắt bộ gõ (nút gạt, tray icon, phím tắt), chuyển kiểu gõ, bảng mã, kiểm tra chính tả, gõ tắt.
+  - Có thể tắt âm thanh phản hồi trong tab Nâng cao.
+
 - **Tổ hợp phím chức năng nhanh (F1 - F12)**:
 
   | Phím | Chức năng |
@@ -72,6 +77,11 @@ VietType là bộ gõ tiếng Việt được thiết kế và phát triển b�
 - **Kiểm tra chính tả và phục hồi từ gốc**:
   - Nhận diện lỗi từ vựng tiếng Việt theo thời gian thực.
   - Tự động hoàn tác/khôi phục từ gốc khi phát hiện sai hoặc khi người dùng chỉnh sửa.
+
+- **Khởi động cùng Windows qua Task Scheduler — không cần UAC**:
+  - Khi chạy với quyền Admin và bật "Khởi động cùng Windows", VietType tự đăng ký task với trigger Logon và RunLevel Highest → lần đăng nhập sau app khởi động elevated im lặng, không hiện UAC.
+  - Checkbox "Chạy với quyền quản trị": lần đầu cần một UAC prompt; từ đó về sau các lần chạy/restart admin chỉ cần gọi task đã đăng ký — không UAC.
+  - Tự fallback về Registry Run key nếu Task Scheduler không đăng ký được.
 
 - **Tương thích quyền Administrator**:
   - Hỗ trợ chạy với quyền Quản trị viên để gõ mượt mà trên các ứng dụng nâng cao, IDE, Terminal và Game.

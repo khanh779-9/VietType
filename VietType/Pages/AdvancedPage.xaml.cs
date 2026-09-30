@@ -10,6 +10,7 @@ public partial class AdvancedPage : UserControl
     public CheckBox StartWithWindows => StartWithWindowsCheck;
     public CheckBox ShowWindowAtStartup => ShowWindowAtStartupCheck;
     public CheckBox UseClipboard => UseClipboardCheck;
+    public CheckBox SoundFeedback => SoundFeedbackCheck;
     public CheckBox DebugTracking => DebugTrackingCheck;
     public TextBox DebugLog => DebugLogBox;
 

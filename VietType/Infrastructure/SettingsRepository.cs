@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using VietType.Core.Models;
+using VietType.Platform;
 using Microsoft.Win32;
 
 namespace VietType.Infrastructure;
@@ -76,13 +77,36 @@ public sealed class SettingsRepository
         File.WriteAllLines(ShortcutPath, lines);
     }
 
+    /// <summary>
+    /// Đã bật khởi động cùng Windows nếu có Registry Run key
+    /// hoặc task "VietType" đã được đăng ký trong Task Scheduler.
+    /// </summary>
     public bool IsStartWithWindows()
     {
         using var key = Registry.CurrentUser.OpenSubKey(RunRegistryKey, writable: false);
-        return key?.GetValue(RunValueName) is string;
+        return key?.GetValue(RunValueName) is string || VietTypeStartupTask.IsRegistered();
     }
 
     public void SetStartWithWindows(bool enabled)
+    {
+        if (!enabled)
+        {
+            SetRunKey(false);
+            VietTypeStartupTask.Unregister();
+            return;
+        }
+
+        // Đang chạy với quyền Admin → ưu tiên Task Scheduler: task Logon với
+        // RunLevel Highest khởi động elevated mà KHÔNG cần UAC prompt lúc đăng nhập.
+        // Fallback về Registry Run key nếu đăng ký task thất bại.
+        // Chỉ dùng MỘT đường để tránh ứng dụng khởi động trùng hai lần.
+        if (ElevationHelper.IsAdministrator() && VietTypeStartupTask.Register())
+            SetRunKey(false);
+        else
+            SetRunKey(true);
+    }
+
+    private void SetRunKey(bool enabled)
     {
         using var key = Registry.CurrentUser.OpenSubKey(RunRegistryKey, writable: true)
                         ?? Registry.CurrentUser.CreateSubKey(RunRegistryKey, writable: true);

@@ -22,6 +22,8 @@
                     <ComboBox x:Name="ThemeCombo" SelectionChanged="ThemeCombo_SelectionChanged">
                         <ComboBoxItem Content="Light"/><ComboBoxItem Content="Dark"/><ComboBoxItem Content="Auto (theo Windows)"/>
                     </ComboBox>
+                    <CheckBox x:Name="SoundFeedbackCheck" Content="Âm thanh phản hồi khi thao tác" Checked="SettingChanged" Unchecked="SettingChanged" Margin="0,8,0,0"/>
+                    <TextBlock Text="Phát âm thanh ngắn khi bật/tắt bộ gõ, chuyển kiểu gõ hoặc bảng mã." Style="{StaticResource SmallMutedTextStyle}" Margin="22,2,0,0"/>
                 </StackPanel>
             </controls:SettingCard>
 

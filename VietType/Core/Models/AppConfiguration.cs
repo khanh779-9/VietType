@@ -22,6 +22,7 @@ public sealed class AppConfiguration
     public bool SupportGames { get; set; } = true;
     public bool SupportMetro { get; set; } = true;
     public bool UseClipboardReplacement { get; set; } = false;
+    public bool SoundFeedback { get; set; } = true;
 
     // Chi tiết thiết lập phím tắt
     public HotkeyItem HotkeyToggle { get; set; } = new() { Ctrl = true, Shift = true, Key = "" };

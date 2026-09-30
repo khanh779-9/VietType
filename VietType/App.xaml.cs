@@ -23,6 +23,16 @@ public partial class App : Application
             var cfg = repo.Load();
             if (cfg.RunAsAdmin && !Platform.ElevationHelper.IsAdministrator())
             {
+                // Đã có task "VietType" (RunLevel Highest) → khởi động instance
+                // elevated qua Task Scheduler, KHÔNG cần UAC prompt.
+                if (Platform.VietTypeStartupTask.IsRegistered() && Platform.VietTypeStartupTask.TryRunElevated())
+                {
+                    Shutdown();
+                    return;
+                }
+
+                // Fallback: chưa có task → UAC prompt như cũ;
+                // instance admin mới sẽ đăng ký task lúc nạp cấu hình.
                 if (Platform.ElevationHelper.RestartAsAdministrator())
                 {
                     Shutdown();

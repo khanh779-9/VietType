@@ -96,7 +96,9 @@ public partial class MainWindow : VietTypeWindow
 
             ApplyConfigurationToUI(settings);
             ApplySettingsToEngine();
+            _suppressEnabledFeedback = true;
             _keyboardHook.IsEnabled = settings.Enabled;
+            _suppressEnabledFeedback = false;
             _keyboardHook.Install();
             UpdateStatusVisuals();
             UpdatePreview();
@@ -154,6 +156,7 @@ public partial class MainWindow : VietTypeWindow
         HomePage.StartWithWindows.IsChecked = isWinStart;
         AdvancedPage.StartWithWindows.IsChecked = isWinStart;
         AdvancedPage.UseClipboard.IsChecked = settings.UseClipboardReplacement;
+        AdvancedPage.SoundFeedback.IsChecked = settings.SoundFeedback;
 
         ShortcutsPage.Enabled.IsChecked = settings.EnableShortcuts;
         ShortcutsPage.WithoutSpace.IsChecked = settings.ShortcutWithoutSpace;
@@ -170,6 +173,12 @@ public partial class MainWindow : VietTypeWindow
         _keyboardHook.SupportGames = settings.SupportGames;
         _keyboardHook.SupportMetro = settings.SupportMetro;
         _keyboardHook.UseClipboardReplacement = settings.UseClipboardReplacement;
+
+        // Đang chạy elevated và người dùng muốn quyền Admin → đảm bảo task "VietType"
+        // (RunLevel Highest) đã đăng ký: các lần khởi động/restart sau sẽ gọi task
+        // này thay vì UAC prompt.
+        if (settings.RunAsAdmin && Platform.ElevationHelper.IsAdministrator())
+            Platform.VietTypeStartupTask.Register();
 
         // Nạp cấu hình phím tắt chi tiết
         HotkeysPage.ToggleCtrl.IsChecked = settings.HotkeyToggle.Ctrl;
@@ -522,6 +531,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void SetTypingMethodFromTray(int index)
     {
+        SoundFeedback.PlaySwitch();
         HomePage.TypingMethod.SelectedIndex = index;
         string name = (HomePage.TypingMethod.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Telex";
         ShowBalloonNotification("VietType - Kiểu gõ", $"Đã chọn kiểu gõ: {name}");
@@ -529,6 +539,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void SetCodeTableFromTray(int index)
     {
+        SoundFeedback.PlaySwitch();
         HomePage.CodeTable.SelectedIndex = index;
         string name = (HomePage.CodeTable.SelectedItem as ComboBoxItem)?.Content?.ToString() ?? "Unicode";
         ShowBalloonNotification("VietType - Bảng mã", $"Đã chọn bảng mã: {name}");
@@ -627,9 +638,21 @@ public partial class MainWindow : VietTypeWindow
         SaveCurrentSettings();
     }
 
+    private bool _suppressEnabledFeedback;
+
     private void OnEnabledChanged(object? sender, bool enabled)
     {
-        Dispatcher.Invoke(() => { _loading = true; HomePage.Toggle.IsOn = enabled; _loading = false; UpdateStatusVisuals(); });
+        Dispatcher.Invoke(() =>
+        {
+            _loading = true;
+            HomePage.Toggle.IsOn = enabled;
+            _loading = false;
+            UpdateStatusVisuals();
+
+            if (_suppressEnabledFeedback) return;
+            if (enabled) SoundFeedback.PlayToggleOn(); else SoundFeedback.PlayToggleOff();
+            ShowBalloonNotification("VietType - Bộ gõ", enabled ? "Đã BẬT bộ gõ tiếng Việt" : "Đã TẮT bộ gõ tiếng Việt");
+        });
     }
 
     private void UpdateStatusVisuals()
@@ -719,6 +742,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void CycleTypingMethod()
     {
+        SoundFeedback.PlaySwitch();
         int next = (HomePage.TypingMethod.SelectedIndex + 1) % 4;
         HomePage.TypingMethod.SelectedIndex = next;
         string name = next switch { 0 => "Telex", 1 => "VNI", 2 => "VIQR", _ => "Telex mở rộng" };
@@ -727,6 +751,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void SelectUnicodeTable()
     {
+        SoundFeedback.PlaySwitch();
         for (int i = 0; i < HomePage.CodeTable.Items.Count; i++)
         {
             if ((HomePage.CodeTable.Items[i] as ComboBoxItem)?.Content?.ToString() == "Unicode")
@@ -740,6 +765,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void CycleCodeTable()
     {
+        SoundFeedback.PlaySwitch();
         if (HomePage.CodeTable.Items.Count == 0) return;
         int next = (Math.Max(0, HomePage.CodeTable.SelectedIndex) + 1) % HomePage.CodeTable.Items.Count;
         HomePage.CodeTable.SelectedIndex = next;
@@ -749,6 +775,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void ToggleSpellCheck()
     {
+        SoundFeedback.PlaySwitch();
         int next = InputPage.SpellCheck.SelectedIndex > 0 ? 0 : 1;
         InputPage.SpellCheck.SelectedIndex = next;
         string name = next switch { 1 => "Cơ bản", 2 => "Nghiêm ngặt", _ => "Không kiểm tra" };
@@ -757,6 +784,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void ToggleShortcutsState()
     {
+        SoundFeedback.PlaySwitch();
         ShortcutsPage.Enabled.IsChecked = ShortcutsPage.Enabled.IsChecked != true;
         bool state = ShortcutsPage.Enabled.IsChecked == true;
         ShowBalloonNotification("VietType - Gõ tắt", state ? "Đã BẬT tính năng gõ tắt." : "Đã TẮT tính năng gõ tắt.");
@@ -780,6 +808,15 @@ public partial class MainWindow : VietTypeWindow
 
         if (requestAdmin && !isCurrentlyAdmin)
         {
+            // Đã có task "VietType" (RunLevel Highest) → khởi động instance elevated
+            // qua Task Scheduler, KHÔNG cần UAC prompt. Instance hiện tại tự thoát.
+            if (Platform.VietTypeStartupTask.IsRegistered() && Platform.VietTypeStartupTask.TryRunElevated())
+            {
+                SaveCurrentSettings();
+                ExitApplication();
+                return;
+            }
+
             var result = MessageBox.Show(
                 "Để kích hoạt quyền quản trị (Administrator), VietType cần khởi động lại.\n\nBạn có muốn khởi động lại ứng dụng ngay bây giờ?",
                 "Khởi động quyền quản trị - VietType",
@@ -823,6 +860,7 @@ public partial class MainWindow : VietTypeWindow
         _keyboardHook.SupportGames = InputPage.SupportGames.IsChecked == true;
         _keyboardHook.SupportMetro = InputPage.SupportMetro.IsChecked == true;
         _keyboardHook.UseClipboardReplacement = AdvancedPage.UseClipboard.IsChecked == true;
+        SoundFeedback.Enabled = AdvancedPage.SoundFeedback.IsChecked == true;
 
         _keyboardHook.HotkeyToggle = new HotkeyItem
         {
@@ -902,6 +940,7 @@ public partial class MainWindow : VietTypeWindow
                 SupportGames = InputPage.SupportGames.IsChecked == true,
                 SupportMetro = InputPage.SupportMetro.IsChecked == true,
                 UseClipboardReplacement = AdvancedPage.UseClipboard.IsChecked == true,
+                SoundFeedback = AdvancedPage.SoundFeedback.IsChecked == true,
 
                 HotkeyToggle = new HotkeyItem
                 {
@@ -990,7 +1029,7 @@ public partial class MainWindow : VietTypeWindow
     private void CheckForUpdates()
     {
         MessageBox.Show(
-            "Bạn đang sử dụng phiên bản VietType mới nhất (v1.0.0).\n\nKhông có bản cập nhật mới nào tại thời điểm này.",
+            "Bạn đang sử dụng phiên bản VietType mới nhất (v1.1.0).\n\nKhông có bản cập nhật mới nào tại thời điểm này.",
             "VietType - Kiểm tra cập nhật",
             MessageBoxButton.OK,
             MessageBoxImage.Information);
