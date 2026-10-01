@@ -6,8 +6,9 @@ using VietType.Core.Models;
 namespace VietType.Core.Typing;
 
 /// <summary>
-/// Adapter hiện đại hóa lõi VietnameseProcessor cũ: giữ thuật toán VNI/Telex/VIQR
+/// Adapter hiện đại hóa lõi VietnameseProcessor cũ: giữ thuật toán VNI/Telex/VIQR/Telex mở rộng
 /// nhưng cung cấp API đơn giản cho global keyboard hook.
+/// Chỉ số kiểu gõ khớp với thứ tự hiển thị trên UI: 0=Telex, 1=VNI, 2=VIQR, 3=Telex mở rộng.
 /// </summary>
 public sealed class TextInputEngine : ITextInputEngine
 {
@@ -20,7 +21,7 @@ public sealed class TextInputEngine : ITextInputEngine
 
     private static readonly char[] Vni = ['0', '1', '2', '4', '3', '5', '6', ' ', ' ', ' ', ' ', ' ', '7', '8', '9'];
     private static readonly char[] Telex = ['z', 's', 'f', 'x', 'r', 'j', ' ', 'a', 'e', 'o', ' ', 'w', ' ', ' ', 'd'];
-    private static readonly char[] TelexExtended = ['z', 's', 'f', 'x', 'r', 'j', ' ', 'a', 'e', 'o', 'w', ' ', ' ', ' ', 'd'];
+    private static readonly char[] TelexExtended = ['z', 's', 'f', 'x', 'r', 'j', ' ', 'a', 'e', 'o', 'w', 'w', ' ', ' ', 'd'];
     private static readonly char[] Viqr = ['0', '\'', '`', '~', '?', '.', '^', ' ', ' ', ' ', ' ', ' ', '+', '(', 'd'];
 
     public TextInputEngine(string[] unicodeCodeTable)
@@ -69,10 +70,10 @@ public sealed class TextInputEngine : ITextInputEngine
         {
             _core.kieuGo = index switch
             {
-                0 => Vni,
-                1 => Telex,
-                2 => TelexExtended,
-                3 => Viqr,
+                0 => Telex,
+                1 => Vni,
+                2 => Viqr,
+                3 => TelexExtended,
                 _ => Telex
             };
             ResetInternal();
@@ -85,11 +86,11 @@ public sealed class TextInputEngine : ITextInputEngine
         {
             lock (_sync)
             {
-                if (ReferenceEquals(_core.kieuGo, Vni)) return 0;
-                if (ReferenceEquals(_core.kieuGo, Telex)) return 1;
-                if (ReferenceEquals(_core.kieuGo, TelexExtended)) return 2;
-                if (ReferenceEquals(_core.kieuGo, Viqr)) return 3;
-                return 1;
+                if (ReferenceEquals(_core.kieuGo, Telex)) return 0;
+                if (ReferenceEquals(_core.kieuGo, Vni)) return 1;
+                if (ReferenceEquals(_core.kieuGo, Viqr)) return 2;
+                if (ReferenceEquals(_core.kieuGo, TelexExtended)) return 3;
+                return 0;
             }
         }
     }
@@ -109,10 +110,10 @@ public sealed class TextInputEngine : ITextInputEngine
 
     private char[] GetTypingMap() => TypingMethodIndex switch
     {
-        0 => Vni,
-        1 => Telex,
-        2 => TelexExtended,
-        3 => Viqr,
+        0 => Telex,
+        1 => Vni,
+        2 => Viqr,
+        3 => TelexExtended,
         _ => Telex
     };
 

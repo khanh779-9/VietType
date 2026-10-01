@@ -19,3 +19,8 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
+
+## Release artifacts
+publish/
+*.zip
+

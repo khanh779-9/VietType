@@ -10,7 +10,7 @@
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6.svg)](https://microsoft.com/windows)
 [![WPF](https://img.shields.io/badge/UI-WPF%20XAML-00599E.svg)]()
-[![Version](https://img.shields.io/badge/Version-1.2.0-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.2.1-green.svg)]()
 
 </div>
 

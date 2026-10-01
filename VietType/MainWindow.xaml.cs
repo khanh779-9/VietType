@@ -604,6 +604,7 @@ public partial class MainWindow : VietTypeWindow
         Application.Current?.Shutdown();
     }
 
+    // Bấm nút [X] không tắt app mà chỉ ẩn xuống khay hệ thống (System Tray). Muốn thoát hẳn phải dùng menu khay -> Thoát.
     protected override void OnCloseButtonClick() => Hide();
 
     private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -1108,9 +1109,10 @@ public partial class MainWindow : VietTypeWindow
         }
 
         // Tải 17 bảng mã tiêu chuẩn theo đúng thứ tự tham chiếu
-        foreach (string name in CharacterTables.PredefinedTableNames)
+        for (int i = 0; i < CharacterTables.PredefinedTableFiles.Length; i++)
         {
-            string file = Path.Combine(folder, $"{name}.txt");
+            string file = Path.Combine(folder, $"{CharacterTables.PredefinedTableFiles[i]}.txt");
+            string name = CharacterTables.PredefinedTableNames[i];
             if (File.Exists(file))
             {
                 try
@@ -1139,7 +1141,7 @@ public partial class MainWindow : VietTypeWindow
             foreach (string file in Directory.GetFiles(folder, "*.txt").OrderBy(Path.GetFileName))
             {
                 string name = Path.GetFileNameWithoutExtension(file);
-                if (CharacterTables.PredefinedTableNames.Contains(name))
+                if (CharacterTables.PredefinedTableFiles.Contains(name))
                     continue;
 
                 try

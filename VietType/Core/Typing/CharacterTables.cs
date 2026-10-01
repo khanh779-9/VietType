@@ -4,6 +4,29 @@ namespace VietType.Core.Typing;
 
 public static class CharacterTables
 {
+    // Tên file .txt trong thư mục Data\EncodingTables (chỉ ASCII, ngăn cách bằng _),
+    // thứ tự phần tử tương ứng 1-1 với PredefinedTableNames.
+    public static readonly string[] PredefinedTableFiles =
+    [
+        "BK_HCM_1",
+        "BK_HCM_2",
+        "NCR_Decimal",
+        "NCR_Hex",
+        "TCVN3_ABC",
+        "UTF_8",
+        "Unicode",
+        "Unicode_C_string_Decimal",
+        "Unicode_C_string_Hex",
+        "Unicode_to_hop",
+        "VIQR",
+        "VISCII",
+        "VNI_Windows",
+        "VPS",
+        "Vietware_F",
+        "Vietware_X",
+        "Windows_1258_codepage"
+    ];
+
     public static readonly string[] PredefinedTableNames =
     [
         "BK HCM 1",
