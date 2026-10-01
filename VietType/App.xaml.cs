@@ -2,6 +2,8 @@ using VietType.Themes;
 using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Interop;
 using System.Runtime.InteropServices;
 
 namespace VietType;
@@ -14,13 +16,24 @@ public partial class App : Application
     private Mutex? _instanceMutex;
     private EventWaitHandle? _showEvent;
 
+    public App()
+    {
+        // Khắc phục triệt để lỗi màn hình đen (Black Screen) trên Intel Iris Xe Graphics và driver GPU.
+        RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+    }
+
     private void Application_Startup(object sender, StartupEventArgs e)
     {
+        RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
+        ThemeManager.Initialize();
+
         // Kiểm tra nếu người dùng đã chọn chạy quyền Admin mà hiện tại chưa có quyền
         try
         {
             var repo = new Infrastructure.SettingsRepository();
             var cfg = repo.Load();
+            ThemeManager.Apply(ThemeManager.Parse(cfg.Theme));
+
             if (cfg.RunAsAdmin && !Platform.ElevationHelper.IsAdministrator())
             {
                 // Đã có task "VietType" (RunLevel Highest) → khởi động instance
@@ -41,8 +54,6 @@ public partial class App : Application
             }
         }
         catch { }
-
-        ThemeManager.Initialize();
 
         bool createdNew = false;
         try

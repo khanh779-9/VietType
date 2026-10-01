@@ -7,7 +7,7 @@
     <Style TargetType="{x:Type controls:VietTypeWindow}">
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
-                <shell:WindowChrome CaptionHeight="34" ResizeBorderThickness="6" GlassFrameThickness="1" UseAeroCaptionButtons="False"/>
+                <shell:WindowChrome CaptionHeight="34" ResizeBorderThickness="6" GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource WindowBrush}"/>

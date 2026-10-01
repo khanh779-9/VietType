@@ -26,34 +26,54 @@ public static class ThemeManager
     private const string LightFile = "Light.xaml";
     private const string DarkFile = "Dark.xaml";
 
+    public static AppTheme Parse(string? value) =>
+        Enum.TryParse<AppTheme>(value, true, out var theme) ? theme : AppTheme.Light;
+
     public static void Apply(AppTheme theme)
     {
         Current = theme;
         bool dark = theme == AppTheme.Dark || (theme == AppTheme.Auto && IsSystemDark());
         string themeFile = dark ? DarkFile : LightFile;
+
+        var merged = Application.Current?.Resources?.MergedDictionaries;
+        if (merged is null) return;
+
+        int existingIndex = -1;
+        bool alreadyMatches = false;
+        for (int i = 0; i < merged.Count; i++)
+        {
+            var src = merged[i].Source?.OriginalString;
+            if (src is null) continue;
+            if (src.EndsWith(themeFile, StringComparison.OrdinalIgnoreCase))
+            {
+                alreadyMatches = true;
+                existingIndex = i;
+                break;
+            }
+            if (src.EndsWith(LightFile, StringComparison.OrdinalIgnoreCase) ||
+                src.EndsWith(DarkFile, StringComparison.OrdinalIgnoreCase))
+            {
+                existingIndex = i;
+                break;
+            }
+        }
+
+        if (alreadyMatches) return;
+
         var dictionary = new ResourceDictionary
         {
             Source = new Uri($"/VietType;component/Themes/{themeFile}", UriKind.Relative)
         };
 
-        var merged = Application.Current.Resources.MergedDictionaries;
-
-        // Find and replace the existing theme dictionary (Light or Dark) instead
-        // of clearing everything, so control styles remain intact.
-        // Compare by filename since URI formats differ between XAML-loaded and
-        // code-loaded dictionaries.
-        for (int i = merged.Count - 1; i >= 0; i--)
+        if (existingIndex >= 0)
         {
-            var src = merged[i].Source;
-            if (src is null) continue;
-            var path = src.OriginalString;
-            if (path.EndsWith(LightFile, StringComparison.OrdinalIgnoreCase) ||
-                path.EndsWith(DarkFile, StringComparison.OrdinalIgnoreCase))
-            {
-                merged.RemoveAt(i);
-            }
+            merged.RemoveAt(existingIndex);
+            merged.Insert(existingIndex, dictionary);
         }
-        merged.Add(dictionary);
+        else
+        {
+            merged.Add(dictionary);
+        }
     }
 
     public static bool IsSystemDark()

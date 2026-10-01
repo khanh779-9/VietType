@@ -92,5 +92,11 @@ public partial class VietTypeWindow : Window
         }
     }
 
+    protected override void OnContentRendered(EventArgs e)
+    {
+        base.OnContentRendered(e);
+        InvalidateVisual();
+    }
+
     protected virtual void OnCloseButtonClick() => Close();
 }

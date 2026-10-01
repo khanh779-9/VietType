@@ -33,6 +33,12 @@ public partial class MainWindow : VietTypeWindow
     private bool _loading;
     private bool _allowClose;
 
+    static MainWindow()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(MainWindow),
+            new FrameworkPropertyMetadata(typeof(VietTypeWindow)));
+    }
+
     public MainWindow()
     {
         InitializeComponent();
@@ -1172,7 +1178,7 @@ public partial class MainWindow : VietTypeWindow
 
     private void OnHookError(object? sender, string message) => Dispatcher.BeginInvoke(() => { AdvancedPage.DebugLog.AppendText($"[{DateTime.Now:HH:mm:ss.fff}] ERROR: {message}{Environment.NewLine}"); AdvancedPage.DebugLog.ScrollToEnd(); });
     private void OpenDataFolder_Click(object sender, RoutedEventArgs e) => OpenPath(_settings.AppDirectory);
-    private void OpenGuide_Click(object sender, RoutedEventArgs e) => OpenPath(Path.Combine(AppContext.BaseDirectory, "Resources", "Guide", "UsageGuide.html"));
+    private void OpenGuide_Click(object sender, RoutedEventArgs e) => OpenPath(Path.Combine(AppContext.BaseDirectory, "Resources", "Documentation", "UsageGuide.html"));
     private void OpenEncodingTables_Click(object sender, RoutedEventArgs e) => OpenPath(Path.Combine(AppContext.BaseDirectory, "Data", "EncodingTables"));
 
     private static void OpenPath(string path)

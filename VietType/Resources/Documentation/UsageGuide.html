@@ -2,7 +2,7 @@
 <html lang="vi">
   <head>
     <meta charset="utf-8" />
-    <title>VietType - Hướng dẫn</title>
+    <title>VietType - Hướng dẫn sử dụng</title>
     <style>
       body {
         font-family:
@@ -12,31 +12,258 @@
         margin: 40px auto;
         line-height: 1.6;
         color: #24324a;
+        padding: 0 16px;
       }
       h1 {
         color: #2167c9;
+      }
+      h2 {
+        color: #2167c9;
+        margin-top: 32px;
       }
       code {
         background: #f2f5f9;
         padding: 2px 5px;
         border-radius: 4px;
       }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+      }
+      th,
+      td {
+        border: 1px solid #dde4ee;
+        padding: 6px 10px;
+        text-align: left;
+      }
+      th {
+        background: #f2f5f9;
+      }
+      ul {
+        padding-left: 22px;
+      }
+      .muted {
+        color: #6b7a93;
+        font-size: 0.92em;
+      }
+      footer {
+        margin-top: 40px;
+        padding-top: 14px;
+        border-top: 1px solid #dde4ee;
+      }
     </style>
   </head>
   <body>
-    <h1>VietType</h1>
-    <p>Hướng dẫn sử dụng bộ gõ tiếng Việt.</p>
-    <h2>Bật / tắt</h2>
-    <p>Dùng phím chuyển bộ gõ đã cấu hình trong ứng dụng.</p>
-    <h2>Kiểu gõ</h2>
+    <h1>VietType - Hướng dẫn sử dụng</h1>
     <p>
-      VietType hỗ trợ Telex, VNI và các tùy chọn xử lý tiếng Việt được hiển thị
-      trong trang <strong>Bộ gõ</strong>.
+      Bộ gõ tiếng Việt hiện đại, mượt mà và nhẹ nhàng dành cho Windows 10/11,
+      xây dựng trên nền tảng .NET 8 và WPF.
     </p>
+
+    <h2>Bật / tắt bộ gõ</h2>
+    <p>Có thể bật hoặc tắt bộ gõ tiếng Việt trên toàn hệ thống bằng:</p>
+    <ul>
+      <li>
+        Nút gạt <strong>Bộ gõ tiếng Việt</strong> ở trang
+        <strong>Tổng quan</strong> của cửa sổ ứng dụng.
+      </li>
+      <li>
+        Phím tắt chuyển đổi E / V đã cấu hình trong trang
+        <strong>Phím tắt</strong>.
+      </li>
+      <li>Menu khay hệ thống (System Tray) ở góc phải màn hình.</li>
+    </ul>
+    <p class="muted">
+      Mỗi thao tác bật/tắt đều kèm âm thanh phản hồi và balloon thông báo.
+    </p>
+
+    <h2>Kiểu gõ và bảng mã</h2>
+    <p>
+      Chọn <strong>Kiểu gõ</strong> (Telex, VNI, VIQR, Telex mở rộng) và
+      <strong>Bảng mã</strong> ngay ở trang <strong>Tổng quan</strong>. VietType
+      hỗ trợ 17 bảng mã tiếng Việt chuẩn hóa: Unicode (Dựng sẵn), Unicode (Tổ
+      hợp), TCVN3 (ABC), VNI Windows, VIQR, Windows 1258, BKHCM 1/2, Vietware
+      X/F, UTF-8, NCR Decimal/Hex, Unicode C String, TCVN 6064, VPS, VISCII.
+    </p>
+    <p>
+      Dùng ô <strong>Thử nhanh</strong> ở trang Tổng quan để kiểm tra cách gõ
+      trước khi dùng thật.
+    </p>
+
+    <h2>Kiểm tra chính tả và gợi ý từ</h2>
+    <p>Cấu hình trong trang <strong>Bộ gõ</strong>:</p>
+    <ul>
+      <li>
+        <strong>Mức kiểm tra chính tả</strong>: Không kiểm tra / Cơ bản /
+        Nghiêm ngặt.
+      </li>
+      <li><strong>Cho phép xử lý kiểu dấu hiện đại</strong>.</li>
+      <li><strong>Bỏ dấu khi tìm gợi ý</strong> (auto complete).</li>
+    </ul>
+    <p>
+      Phím <strong>phục hồi từ</strong> (trang Phím tắt) khôi phục ký tự gốc
+      chưa bỏ dấu của từ vừa gõ.
+    </p>
+
     <h2>Gõ tắt</h2>
     <p>
-      Cấu hình từ khóa và nội dung thay thế trong trang <strong>Gõ tắt</strong>.
+      Cấu hình từ khóa và nội dung thay thế trong trang
+      <strong>Gõ tắt</strong>: nhập <strong>Từ khóa viết tắt</strong> và
+      <strong>Nội dung thay thế</strong>, rồi dùng các nút Thêm / Lưu / Xóa để
+      quản lý danh sách macro.
     </p>
-    <p>Đây là tài liệu do dự án VietType tạo và đóng gói.</p>
+    <ul>
+      <li><strong>Bật tính năng gõ tắt</strong> để kích hoạt.</li>
+      <li>
+        <strong>Gõ tắt không cần phím cách</strong>: tự động thay thế ngay khi
+        gõ xong từ khóa.
+      </li>
+      <li>
+        <strong>Vẫn cho phép gõ tắt khi bộ gõ đang Tắt [E]</strong>.
+      </li>
+    </ul>
+    <p class="muted">Dùng F9 để bật/tắt nhanh tính năng gõ tắt.</p>
+
+    <h2>Phím tắt</h2>
+    <p>
+      Thiết lập trong trang <strong>Phím tắt</strong>. Ba tổ hợp chính gồm phím
+      chuyển E / V (bật/tắt bộ gõ), phím chuyển cơ chế (Telex / VNI / VIQR) và
+      phím phục hồi từ; mỗi tổ hợp cho phép chọn các phím bổ trợ Ctrl / Shift /
+      Alt / Win cùng một phím chính.
+    </p>
+    <p>
+      Ngoài ra, bộ <strong>phím chức năng nhanh F1 - F12</strong> giúp thao tác
+      tức thì mà không cần mở cửa sổ ứng dụng:
+    </p>
+    <table>
+      <tr>
+        <th>Phím</th>
+        <th>Chức năng</th>
+      </tr>
+      <tr>
+        <td><code>F1</code></td>
+        <td>Bật bộ gõ tiếng Việt</td>
+      </tr>
+      <tr>
+        <td><code>F2</code></td>
+        <td>Tắt bộ gõ tiếng Việt</td>
+      </tr>
+      <tr>
+        <td><code>F3</code></td>
+        <td>Chọn bảng mã Unicode</td>
+      </tr>
+      <tr>
+        <td><code>F4</code></td>
+        <td>Chuyển sang bảng mã kế tiếp</td>
+      </tr>
+      <tr>
+        <td><code>F5</code></td>
+        <td>Mở bảng điều khiển</td>
+      </tr>
+      <tr>
+        <td><code>F6</code></td>
+        <td>Bật / tắt kiểm tra chính tả</td>
+      </tr>
+      <tr>
+        <td><code>F7</code></td>
+        <td>Chèn ngày hiện tại (dd/MM/yyyy)</td>
+      </tr>
+      <tr>
+        <td><code>F8</code></td>
+        <td>Mở trang Gõ tắt</td>
+      </tr>
+      <tr>
+        <td><code>F9</code></td>
+        <td>Bật / tắt gõ tắt</td>
+      </tr>
+      <tr>
+        <td><code>F12</code></td>
+        <td>Reset / khôi phục bộ nhớ đệm bộ gõ</td>
+      </tr>
+    </table>
+    <p class="muted">
+      Mỗi phím có thể bật/tắt độc lập; phím bổ trợ (Ctrl + Shift + Alt) tùy
+      chỉnh được trong trang Phím tắt. Mọi thao tác đều kèm balloon thông báo.
+    </p>
+
+    <h2>Tương thích hệ thống</h2>
+    <ul>
+      <li>
+        <strong>Chạy với quyền quản trị</strong> (trang Bộ gõ): cần thiết để gõ
+        tiếng Việt trong game và các phần mềm chạy quyền Admin.
+      </li>
+      <li>
+        <strong>Hỗ trợ Games</strong>: đồng bộ scan code phần cứng và bộ đệm
+        khung hình cho DirectX / Game.
+      </li>
+      <li>
+        <strong>Hỗ trợ Metro / UWP</strong>: tương thích Start Menu, Windows
+        Search, Edge và Store Apps.
+      </li>
+      <li>
+        <strong>Sử dụng Clipboard thay thế cho SendInput</strong> (trang Nâng
+        cao): khắc phục lỗi gõ trong Remote Desktop, máy ảo VM,
+        Console/Terminal hoặc ứng dụng không nhận SendInput.
+      </li>
+    </ul>
+
+    <h2>Khởi động cùng Windows - không cần UAC</h2>
+    <p>
+      Khi bật <strong>Khởi động cùng Windows</strong> (trang Tổng quan hoặc
+      Nâng cao), VietType tự đăng ký task trong Windows Task Scheduler với
+      trigger Logon và RunLevel Highest:
+    </p>
+    <ul>
+      <li>
+        Nếu đang chạy với quyền Admin, các lần đăng nhập sau ứng dụng sẽ tự
+        khởi động elevated im lặng, <strong>không hiện hộp thoại UAC</strong>.
+      </li>
+      <li>
+        Tùy chọn <strong>Chạy với quyền quản trị</strong>: lần đầu cần một lần
+        xác nhận UAC; từ đó về sau các lần chạy/restart admin dùng lại task đã
+        đăng ký, không cần UAC.
+      </li>
+      <li>
+        Tự động fallback về Registry Run key nếu Task Scheduler không đăng ký
+        được.
+      </li>
+    </ul>
+
+    <h2>Giao diện và âm thanh</h2>
+    <p>Trang <strong>Nâng cao</strong>:</p>
+    <ul>
+      <li>
+        <strong>Theme</strong>: Light, Dark hoặc Auto (theo Windows) — toàn bộ
+        giao diện và sidebar đồng bộ màu tức thì.
+      </li>
+      <li>
+        <strong>Âm thanh phản hồi khi thao tác</strong>: âm thanh ngắn tổng hợp
+        ngay trong ứng dụng — chime đi lên khi bật bộ gõ, đi xuống khi tắt,
+        tick trung tính khi chuyển kiểu gõ hoặc bảng mã. Có thể tắt nếu không
+        cần.
+      </li>
+    </ul>
+
+    <h2>Công cụ khác</h2>
+    <ul>
+      <li>
+        <strong>Theo dõi log hook bàn phím</strong>: khung nhật ký chẩn đoán
+        trong trang Nâng cao.
+      </li>
+      <li>
+        Các nút tiện lợi: <strong>Khôi phục mặc định</strong>,
+        <strong>Kiểm tra cập nhật</strong>, <strong>Thư mục dữ liệu</strong>,
+        <strong>Bảng mã</strong>.
+      </li>
+      <li>
+        <strong>Menu khay hệ thống</strong>: truy cập nhanh kiểu gõ, bảng mã,
+        bật/tắt gợi ý và các tùy chọn trực tiếp từ khay hệ thống.
+      </li>
+    </ul>
+
+    <footer>
+      <p class="muted">Đây là tài liệu do dự án VietType tạo và đóng gói.</p>
+    </footer>
   </body>
 </html>
