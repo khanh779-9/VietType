@@ -7,7 +7,7 @@
             <TextBlock Text="Tổng quan" Style="{StaticResource PageTitleStyle}"/>
             <TextBlock Text="Cấu hình nhanh và kiểm tra bộ gõ." Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,14"/>
 
-            <Border Style="{StaticResource CardStyle}" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+            <Border Style="{StaticResource CardStyle}" ScrollViewer.VerticalScrollBarVisibility="Auto" >
                 <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -15,18 +15,27 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="12"/>
                         <RowDefinition Height="Auto"/>
-                        
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel>
-                        <TextBlock Text="Bộ gõ tiếng Việt" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
-                        <TextBlock Text="Bật / tắt bộ gõ trên toàn hệ thống" Style="{StaticResource SmallMutedTextStyle}" Margin="0,3,0,0"/>
-                    </StackPanel>
-                    <controls:ToggleSwitch x:Name="ToggleEnabled" Grid.Column="1" IsOn="True" Toggled="ToggleEnabled_Toggled"/>
 
+                    <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Bộ gõ tiếng Việt" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
+                            <TextBlock Text="Bật / tắt bộ gõ trên toàn hệ thống" Style="{StaticResource SmallMutedTextStyle}" Margin="0,3,0,0"/>
+                        </StackPanel>
+                        <controls:ToggleSwitch x:Name="ToggleEnabled" Grid.Column="1" IsOn="True" Toggled="ToggleEnabled_Toggled"/>
+
+                    </Grid>
+                    
                     <Grid Grid.Row="2" Grid.ColumnSpan="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -57,10 +66,10 @@
                         <CheckBox x:Name="StartWithWindowsCheck" Grid.Column="1" Content="Khởi động cùng Windows" Checked="SettingChanged" Unchecked="SettingChanged"/>
                     </Grid>
 
-                    <Border Grid.Row="5" Grid.ColumnSpan="2" Padding="10" CornerRadius="8" Background="{DynamicResource SurfaceAltBrush}" >
-                        <StackPanel Height="Auto">
+                    <Border Grid.Row="6" Grid.ColumnSpan="2" Padding="10" CornerRadius="8" Background="{DynamicResource SurfaceAltBrush}" >
+                        <StackPanel>
                             <TextBlock Text="Thử nhanh" Style="{StaticResource CardCaptionStyle}" Height="Auto"/>
-                            <Grid Margin="0,7,0,0" Height="Auto">
+                            <Grid Margin="0,7,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="10"/>

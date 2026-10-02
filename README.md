@@ -10,7 +10,7 @@
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6.svg)](https://microsoft.com/windows)
 [![WPF](https://img.shields.io/badge/UI-WPF%20XAML-00599E.svg)]()
-[![Version](https://img.shields.io/badge/Version-1.3.0-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.3.1-green.svg)]()
 
 </div>
 
@@ -32,6 +32,8 @@ VietType là bộ gõ tiếng Việt được thiết kế và phát triển b�
 - **Giao diện Fluent tối giản và hiện đại**:
   - Hỗ trợ đầy đủ chủ đề Sáng (Light), Tối (Dark) và Tự động theo hệ thống Windows (Auto).
   - Sidebar đồng bộ hoàn toàn với chủ đề: chuyển Light/Dark là toàn bộ màu sắc nền, icon, chữ và trạng thái chọn của sidebar cập nhật tức thì.
+  - Tối ưu layout trang Tổng quan (`HomePage`): phân chia các hàng lưới rõ ràng, loại bỏ kích thước cố định, căn lề và khoảng cách mượt mà, trực quan.
+  - Hộp thoại Giới thiệu (`AboutWindow`): hiển thị icon ứng dụng độ phân giải cao (`viettype_large.ico`) với cơ chế render `HighQuality` sắc nét.
   - Khung cửa sổ tùy biến (`VietTypeWindow`) thuần WPF `WindowChrome`: căn chỉnh hoàn hảo khi Maximize không bị khuyết viền, nút điều khiển (Minimize, Maximize, Close) nhận diện click chuẩn xác.
 
 - **Hỗ trợ đầy đủ các kiểu gõ thông dụng & tinh chỉnh nâng cao**:

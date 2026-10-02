@@ -574,7 +574,7 @@ public partial class MainWindow : VietTypeWindow
     private void CheckForUpdates()
     {
         MessageBox.Show(
-            "Bạn đang sử dụng phiên bản VietType mới nhất (v1.3.0).\n\nKhông có bản cập nhật mới nào tại thời điểm này.",
+            "Bạn đang sử dụng phiên bản VietType mới nhất (v1.3.1).\n\nKhông có bản cập nhật mới nào tại thời điểm này.",
             "VietType - Kiểm tra cập nhật",
             MessageBoxButton.OK,
             MessageBoxImage.Information);

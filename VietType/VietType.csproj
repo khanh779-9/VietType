@@ -14,9 +14,9 @@
     <EnableDefaultApplicationDefinition>true</EnableDefaultApplicationDefinition>
     <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
-    <Version>1.3.0</Version>
-    <AssemblyVersion>1.3.0.0</AssemblyVersion>
-    <FileVersion>1.3.0.0</FileVersion>
+    <Version>1.3.1</Version>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <FileVersion>1.3.1.0</FileVersion>
     <Product>VietType</Product>
     <Company>Khanh779-9</Company>
     <Authors>Khanh779-9</Authors>
@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Resource Include="Resources\VietType.ico" />
+    <Resource Include="Resources\viettype_large.ico" />
     <Content Include="Resources\Documentation\UsageGuide.html" CopyToOutputDirectory="PreserveNewest" />
     <None Update="Data\EncodingTables\*.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
