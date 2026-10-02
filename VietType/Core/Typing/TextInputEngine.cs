@@ -285,7 +285,7 @@ public sealed class TextInputEngine : ITextInputEngine
     private static bool IsTypingChar(char c)
     {
         if (char.IsLetterOrDigit(c)) return true;
-        return c is '~' or '`' or '\'' or '?' or '.' or '^' or '+' or '(' or ')' or 'w' or 'W';
+        return c is '~' or '`' or '\'' or '?' or '.' or '^' or '+' or '(' or ')' or 'w' or 'W' or ']' or '}' or '[' or '{';
     }
 
     private static string ApplyShortcutCase(string trigger, string replacement)

@@ -29,11 +29,21 @@ public static class ElevationHelper
     }
 
     /// <summary>
-    /// Khởi động lại ứng dụng với quyền Administrator thông qua UAC prompt (runas).
+    /// Khởi động lại ứng dụng với quyền Administrator.
+    /// Ưu tiên chạy qua Task Scheduler (nếu đã đăng ký) để KHÔNG hiển thị UAC prompt.
+    /// Fallback sang UAC prompt (runas) nếu task chưa tồn tại.
     /// </summary>
     /// <returns>True nếu người dùng đồng ý cấp quyền và tiến trình mới đã bắt đầu, False nếu từ chối hoặc lỗi.</returns>
     public static bool RestartAsAdministrator(string? arguments = null)
     {
+        // 1. Thử chạy elevated qua Task Scheduler (KHÔNG CẦN UAC PROMPT)
+        if (VietTypeStartupTask.IsRegistered() && VietTypeStartupTask.TryRunElevated())
+        {
+            Application.Current?.Shutdown();
+            return true;
+        }
+
+        // 2. Chưa có task: gọi runas để người dùng duyệt UAC lần đầu
         var processPath = Environment.ProcessPath;
         if (string.IsNullOrEmpty(processPath))
         {

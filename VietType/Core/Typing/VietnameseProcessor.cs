@@ -179,13 +179,27 @@ public class VietnameseProcessor
 				{
 					chu.vitriThanhPhan = 1;
 					chu.moc = '*';
-					if (nguon[i].ToString() == nguon[i].ToString().ToLower())
+					if (nguon[i] == '}' || nguon[i] == 'W' || (nguon[i] >= 'A' && nguon[i] <= 'Z'))
 					{
-						chu.nguyenAm = "u";
+						chu.nguyenAm = "U";
 					}
 					else
 					{
-						chu.nguyenAm = "U";
+						chu.nguyenAm = "u";
+					}
+					chu.UOA = true;
+				}
+				else if (viTriDauMoc == TypingMode.UThanh7OThanh7)
+				{
+					chu.vitriThanhPhan = 1;
+					chu.moc = '*';
+					if (nguon[i] == '{' || (nguon[i] >= 'A' && nguon[i] <= 'Z'))
+					{
+						chu.nguyenAm = "O";
+					}
+					else
+					{
+						chu.nguyenAm = "o";
 					}
 					chu.UOA = true;
 				}
@@ -202,7 +216,7 @@ public class VietnameseProcessor
 			else if (chu.vitriThanhPhan == 1)
 			{
 				viTriDauMoc = TimKiemKieuGo(nguon[i]);
-				if ((chu.nguyenAm.Length > 0 && KiemTraNguyenAm(nguon[i])) || (viTriDauMoc == TypingMode.UThanh7OThanh7AThanh8 && chu.nguyenAm.Length == 1))
+				if ((chu.nguyenAm.Length > 0 && KiemTraNguyenAm(nguon[i])) || ((viTriDauMoc == TypingMode.UThanh7OThanh7AThanh8 || viTriDauMoc == TypingMode.UThanh7OThanh7) && chu.nguyenAm.Length == 1))
 				{
 					if ((chu.amDau == "g" || chu.amDau == "G") && (chu.nguyenAm[0] == 'i' || chu.nguyenAm[0] == 'I'))
 					{
@@ -217,13 +231,25 @@ public class VietnameseProcessor
 				}
 				if (viTriDauMoc == TypingMode.UThanh7OThanh7AThanh8 && chu.nguyenAm.Length == 0)
 				{
-					if (nguon[i].ToString() == nguon[i].ToString().ToLower())
+					if (nguon[i] == '}' || nguon[i] == 'W' || (nguon[i] >= 'A' && nguon[i] <= 'Z'))
 					{
-						chu.nguyenAm = "u";
+						chu.nguyenAm = "U";
 					}
 					else
 					{
-						chu.nguyenAm = "U";
+						chu.nguyenAm = "u";
+					}
+					chu.UOA = true;
+				}
+				else if (viTriDauMoc == TypingMode.UThanh7OThanh7 && chu.nguyenAm.Length == 0)
+				{
+					if (nguon[i] == '{' || (nguon[i] >= 'A' && nguon[i] <= 'Z'))
+					{
+						chu.nguyenAm = "O";
+					}
+					else
+					{
+						chu.nguyenAm = "o";
 					}
 					chu.UOA = true;
 				}
@@ -251,7 +277,7 @@ public class VietnameseProcessor
 							chu.amCuoi += nguon[i];
 						}
 					}
-					else if (!ThemVaoChu(viTriDauMoc, i))
+					else if (!ThemVaoChu(viTriDauMoc, i, nguon[i]))
 					{
 						if (KiemTraNguyenAm(nguon[i]))
 						{
@@ -305,7 +331,7 @@ public class VietnameseProcessor
 							chu.amCuoi += nguon[i];
 						}
 					}
-					else if (!ThemVaoChu(viTriDauMoc, i) || chu.trungdau >= 0)
+					else if (!ThemVaoChu(viTriDauMoc, i, nguon[i]) || chu.trungdau >= 0)
 					{
 						chu.amCuoi += nguon[i];
 					}
@@ -413,7 +439,7 @@ public class VietnameseProcessor
 		return value + kieuGo[9] + chu.amCuoi;
 	}
 
-	private bool ThemVaoChu(TypingMode dnkg, int trungDau)
+	private bool ThemVaoChu(TypingMode dnkg, int trungDau, char kyTuGo = '\0')
 	{
 		if (dnkg >= TypingMode.khongDau && dnkg <= TypingMode.nang)
 		{
@@ -546,16 +572,9 @@ public class VietnameseProcessor
 			chu.trungdau = trungDau;
 			chu.moc = '-';
 			chu.vitriThanhPhan = 2;
-			if (mocCu == '*' && dnkg == TypingMode.UThanh7OThanh7AThanh8)
+			if (mocCu == '*' && (dnkg == TypingMode.UThanh7OThanh7AThanh8 || dnkg == TypingMode.UThanh7OThanh7))
 			{
-				if (chu.nguyenAm[0] == 'U')
-				{
-					chu.amCuoi += kieuGo[10].ToString().ToUpper();
-				}
-				else
-				{
-					chu.amCuoi += kieuGo[10].ToString().ToLower();
-				}
+				chu.amCuoi += (kyTuGo != '\0' ? kyTuGo.ToString() : (chu.nguyenAm[0] == 'U' ? kieuGo[10].ToString().ToUpper() : kieuGo[10].ToString().ToLower()));
 				if (chu.UOA)
 				{
 					chu.nguyenAm = chu.nguyenAm.Substring(1);
@@ -1019,6 +1038,17 @@ public class VietnameseProcessor
 			if (kieuGo[i] != ' ' && kieuGo[i].ToString().ToLower() == tim.ToString().ToLower())
 			{
 				return (TypingMode)i;
+			}
+		}
+		if (kieuGo.Length > 10 && kieuGo[10] == 'w')
+		{
+			if (tim is ']' or '}')
+			{
+				return TypingMode.UThanh7OThanh7AThanh8;
+			}
+			if (tim is '[' or '{')
+			{
+				return TypingMode.UThanh7OThanh7;
 			}
 		}
 		return TypingMode.Null;

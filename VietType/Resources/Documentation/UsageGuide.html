@@ -98,7 +98,7 @@
         <strong>Mức kiểm tra chính tả</strong>: Không kiểm tra / Cơ bản /
         Nghiêm ngặt.
       </li>
-      <li><strong>Cho phép xử lý kiểu dấu hiện đại</strong>.</li>
+      <li><strong>Cho phép kiểu gõ hiện đại</strong> (đặt dấu theo chuẩn ngữ âm hiện đại: 'hoà', 'thuỷ', 'khoẻ' thay vì 'òa', 'úy', 'khỏe').</li>
       <li><strong>Bỏ dấu khi tìm gợi ý</strong> (auto complete).</li>
     </ul>
     <p>
@@ -208,27 +208,12 @@
       </li>
     </ul>
 
-    <h2>Khởi động cùng Windows - không cần UAC</h2>
+    <h2>Khởi động cùng Windows</h2>
     <p>
       Khi bật <strong>Khởi động cùng Windows</strong> (trang Tổng quan hoặc
-      Nâng cao), VietType tự đăng ký task trong Windows Task Scheduler với
-      trigger Logon và RunLevel Highest:
+      Hệ thống), VietType tự động đăng ký vào Windows Registry
+      (<code>HKCU\Software\Microsoft\Windows\CurrentVersion\Run</code>) để khởi động cùng hệ thống một cách nhanh chóng, ổn định và đồng bộ giữa các trang cài đặt.
     </p>
-    <ul>
-      <li>
-        Nếu đang chạy với quyền Admin, các lần đăng nhập sau ứng dụng sẽ tự
-        khởi động elevated im lặng, <strong>không hiện hộp thoại UAC</strong>.
-      </li>
-      <li>
-        Tùy chọn <strong>Chạy với quyền quản trị</strong>: lần đầu cần một lần
-        xác nhận UAC; từ đó về sau các lần chạy/restart admin dùng lại task đã
-        đăng ký, không cần UAC.
-      </li>
-      <li>
-        Tự động fallback về Registry Run key nếu Task Scheduler không đăng ký
-        được.
-      </li>
-    </ul>
 
     <h2>Giao diện và âm thanh</h2>
     <p>Trang <strong>Nâng cao</strong>:</p>

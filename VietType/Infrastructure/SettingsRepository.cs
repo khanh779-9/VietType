@@ -79,31 +79,38 @@ public sealed class SettingsRepository
 
     /// <summary>
     /// Đã bật khởi động cùng Windows nếu có Registry Run key
-    /// hoặc task "VietType" đã được đăng ký trong Task Scheduler.
+    /// hoặc task "VietType" trong Task Scheduler đang kích hoạt trigger Logon.
     /// </summary>
     public bool IsStartWithWindows()
     {
         using var key = Registry.CurrentUser.OpenSubKey(RunRegistryKey, writable: false);
-        return key?.GetValue(RunValueName) is string || VietTypeStartupTask.IsRegistered();
+        return key?.GetValue(RunValueName) is string || (ElevationHelper.IsAdministrator() && VietTypeStartupTask.HasLogonTrigger());
     }
 
     public void SetStartWithWindows(bool enabled)
     {
-        if (!enabled)
+        if (ElevationHelper.IsAdministrator())
         {
-            SetRunKey(false);
-            VietTypeStartupTask.Unregister();
-            return;
+            if (enabled)
+            {
+                // Khi chạy quyền Admin: Đăng ký task có trigger Logon để Windows tự khởi động
+                // với quyền cao nhất (Highest) mà KHÔNG cần UAC prompt lúc đăng nhập.
+                VietTypeStartupTask.Register(enableLogonTrigger: true);
+                SetRunKey(false);
+            }
+            else
+            {
+                // Tắt khởi động cùng Windows: Tắt trigger Logon nhưng VẪN GIỮ task trong Task Scheduler
+                // để hỗ trợ chạy Administrator không cần UAC prompt!
+                VietTypeStartupTask.Register(enableLogonTrigger: false);
+                SetRunKey(false);
+            }
         }
-
-        // Đang chạy với quyền Admin → ưu tiên Task Scheduler: task Logon với
-        // RunLevel Highest khởi động elevated mà KHÔNG cần UAC prompt lúc đăng nhập.
-        // Fallback về Registry Run key nếu đăng ký task thất bại.
-        // Chỉ dùng MỘT đường để tránh ứng dụng khởi động trùng hai lần.
-        if (ElevationHelper.IsAdministrator() && VietTypeStartupTask.Register())
-            SetRunKey(false);
         else
-            SetRunKey(true);
+        {
+            // Khi chạy quyền người dùng thông thường: Khởi động qua Registry Run
+            SetRunKey(enabled);
+        }
     }
 
     private void SetRunKey(bool enabled)
@@ -113,7 +120,11 @@ public sealed class SettingsRepository
         if (key is null) return;
 
         if (enabled)
-            key.SetValue(RunValueName, Environment.ProcessPath ?? string.Empty);
+        {
+            string? exe = Environment.ProcessPath;
+            if (!string.IsNullOrWhiteSpace(exe))
+                key.SetValue(RunValueName, $"\"{exe}\"");
+        }
         else
             key.DeleteValue(RunValueName, throwOnMissingValue: false);
     }

@@ -22,6 +22,8 @@ public partial class App : Application
         RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
     }
 
+    public static AppBackgroundContext BackgroundContext { get; private set; } = null!;
+
     private void Application_Startup(object sender, StartupEventArgs e)
     {
         RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly;
@@ -36,16 +38,6 @@ public partial class App : Application
 
             if (cfg.RunAsAdmin && !Platform.ElevationHelper.IsAdministrator())
             {
-                // Đã có task "VietType" (RunLevel Highest) → khởi động instance
-                // elevated qua Task Scheduler, KHÔNG cần UAC prompt.
-                if (Platform.VietTypeStartupTask.IsRegistered() && Platform.VietTypeStartupTask.TryRunElevated())
-                {
-                    Shutdown();
-                    return;
-                }
-
-                // Fallback: chưa có task → UAC prompt như cũ;
-                // instance admin mới sẽ đăng ký task lúc nạp cấu hình.
                 if (Platform.ElevationHelper.RestartAsAdministrator())
                 {
                     Shutdown();
@@ -82,6 +74,9 @@ public partial class App : Application
             return;
         }
 
+        BackgroundContext = new AppBackgroundContext();
+        BackgroundContext.Initialize();
+
         // Setup background listener to show window when subsequent instances start
         try
         {
@@ -92,24 +87,18 @@ public partial class App : Application
                 {
                     Current?.Dispatcher.Invoke(() =>
                     {
-                        if (Current.MainWindow is MainWindow mw)
-                        {
-                            mw.ShowFromTray();
-                        }
+                        BackgroundContext.ShowMainWindow();
                     });
                 }
             });
         }
         catch { }
-
-        var window = new MainWindow();
-        MainWindow = window;
-        window.Show();
     }
 
     protected override void OnExit(ExitEventArgs e)
     {
         ThemeManager.Shutdown();
+        BackgroundContext?.Dispose();
         _showEvent?.Dispose();
         _instanceMutex?.Dispose();
         base.OnExit(e);

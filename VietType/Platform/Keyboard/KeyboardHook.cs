@@ -442,7 +442,7 @@ public sealed class KeyboardHook : IDisposable
         };
     }
 
-    private void ToggleEnabled()
+    public void ToggleEnabled()
     {
         var now = DateTime.UtcNow;
         if ((now - _lastToggle).TotalMilliseconds < ToggleDebounceMs)

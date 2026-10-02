@@ -13,8 +13,16 @@
                     <ComboBox x:Name="SpellCheckCombo" SelectionChanged="SpellCheckCombo_SelectionChanged">
                         <ComboBoxItem Content="Không kiểm tra"/><ComboBoxItem Content="Cơ bản"/><ComboBoxItem Content="Nghiêm ngặt"/>
                     </ComboBox>
-                    <CheckBox x:Name="ModernToneCheck" Content="Cho phép xử lý kiểu dấu hiện đại" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <CheckBox x:Name="ModernToneCheck" 
+                              Content="Cho phép kiểu gõ hiện đại" 
+                              Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <TextBlock Text="Đặt dấu vào âm chính thay vì âm đệm (ví dụ: hoà, thuỷ, khoẻ thay vì hòa, thủy, khỏe)." 
+                               Style="{StaticResource SmallMutedTextStyle}" 
+                               Margin="22,2,0,8"/>
                     <CheckBox x:Name="StripToneAutoCheck" Content="Bỏ dấu khi tìm gợi ý" Checked="SettingChanged" Unchecked="SettingChanged"/>
+                    <TextBlock Text="Tự động lược bỏ dấu thanh khi tra cứu từ khóa trong tính năng gợi ý." 
+                               Style="{StaticResource SmallMutedTextStyle}" 
+                               Margin="22,2,0,4"/>
                 </StackPanel>
             </controls:SettingCard>
 

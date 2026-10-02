@@ -10,7 +10,7 @@
 [![.NET 8.0](https://img.shields.io/badge/.NET-8.0-purple.svg)](https://dotnet.microsoft.com/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%2F%2011-0078D6.svg)](https://microsoft.com/windows)
 [![WPF](https://img.shields.io/badge/UI-WPF%20XAML-00599E.svg)]()
-[![Version](https://img.shields.io/badge/Version-1.2.2-green.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.3.0-green.svg)]()
 
 </div>
 
@@ -24,16 +24,25 @@ VietType là bộ gõ tiếng Việt được thiết kế và phát triển b�
 
 ## Tính năng nổi bật
 
+- **Kiến trúc chạy ngầm độc lập (`AppBackgroundContext`)**:
+  - Tách biệt hoàn toàn vòng đời ứng dụng khỏi giao diện chính (`MainWindow`), trao quyền quản lý System Tray, Keyboard Hook và Phím tắt cho background context chuyên biệt.
+  - Loại bỏ hoàn toàn lỗi màn hình đen xì trên các dòng GPU / Intel Iris Xe khi tắt tùy chọn *"Hiện hộp thoại khi khởi động"*.
+  - Tiết kiệm tài nguyên RAM, đóng mở giao diện mượt mà và giải phóng bộ nhớ sạch sẽ khi đóng cửa sổ (`Close()`).
+
 - **Giao diện Fluent tối giản và hiện đại**:
   - Hỗ trợ đầy đủ chủ đề Sáng (Light), Tối (Dark) và Tự động theo hệ thống Windows (Auto).
   - Sidebar đồng bộ hoàn toàn với chủ đề: chuyển Light/Dark là toàn bộ màu sắc nền, icon, chữ và trạng thái chọn của sidebar cập nhật tức thì.
-  - Bo góc tinh tế, phân tách bố cục rõ ràng theo từng trang chức năng.
+  - Khung cửa sổ tùy biến (`VietTypeWindow`) thuần WPF `WindowChrome`: căn chỉnh hoàn hảo khi Maximize không bị khuyết viền, nút điều khiển (Minimize, Maximize, Close) nhận diện click chuẩn xác.
 
-- **Hỗ trợ đầy đủ các kiểu gõ thông dụng**:
-  - Telex
-  - VNI
-  - VIQR
-  - Telex mở rộng
+- **Hỗ trợ đầy đủ các kiểu gõ thông dụng & tinh chỉnh nâng cao**:
+  - **Telex**: Kiểu gõ phổ biến nhất.
+  - **VNI**: Gõ số bỏ dấu truyền thống.
+  - **VIQR**: Kiểu gõ theo chuẩn ký tự ASCII.
+  - **Telex mở rộng**: Tinh chỉnh linh hoạt, gõ `w` hoặc `]` ra `ư` (gõ `W` / `}` ra `Ư`), gõ `[` ra `ơ` (gõ `{` ra `Ơ`), gõ đúp `ww` / `]]` / `[[` khôi phục ký tự gốc.
+
+- **Cho phép kiểu gõ hiện đại**:
+  - Tùy chọn đặt dấu thanh theo chuẩn ngữ âm hiện đại (đặt dấu vào âm chính thay vì âm đệm): ví dụ `hoà`, `thuỷ`, `khoẻ` thay vì `hòa`, `thủy`, `khỏe`.
+  - Đồng bộ hóa dễ dàng giữa bảng cài đặt và menu chuột phải khay hệ thống.
 
 - **Hỗ trợ 17 Bảng mã tiếng Việt chuẩn hóa**:
   - Unicode (Dựng sẵn), Unicode (Tổ hợp)
@@ -78,10 +87,10 @@ VietType là bộ gõ tiếng Việt được thiết kế và phát triển b�
   - Nhận diện lỗi từ vựng tiếng Việt theo thời gian thực.
   - Tự động hoàn tác/khôi phục từ gốc khi phát hiện sai hoặc khi người dùng chỉnh sửa.
 
-- **Khởi động cùng Windows qua Task Scheduler — không cần UAC**:
-  - Khi chạy với quyền Admin và bật "Khởi động cùng Windows", VietType tự đăng ký task với trigger Logon và RunLevel Highest → lần đăng nhập sau app khởi động elevated im lặng, không hiện UAC.
-  - Checkbox "Chạy với quyền quản trị": lần đầu cần một UAC prompt; từ đó về sau các lần chạy/restart admin chỉ cần gọi task đã đăng ký — không UAC.
-  - Tự fallback về Registry Run key nếu Task Scheduler không đăng ký được.
+- **Khởi động cùng Windows đồng bộ & Chạy Admin không cần UAC**:
+  - Đồng bộ hóa 2 chiều trạng thái checkbox khởi động giữa các trang cài đặt.
+  - Khởi động chế độ người dùng chuẩn thông qua Windows Registry (`HKCU\Software\Microsoft\Windows\CurrentVersion\Run`).
+  - Hỗ trợ Task Scheduler (RunLevel Highest) cho quyền Administrator: tự động đăng nhập elevated hoặc nâng quyền chạy mà **không cần hộp thoại UAC** (kiểu EVKey).
 
 - **Tương thích quyền Administrator**:
   - Hỗ trợ chạy với quyền Quản trị viên để gõ mượt mà trên các ứng dụng nâng cao, IDE, Terminal và Game.

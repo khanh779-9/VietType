@@ -7,12 +7,20 @@
             <TextBlock Text="Tổng quan" Style="{StaticResource PageTitleStyle}"/>
             <TextBlock Text="Cấu hình nhanh và kiểm tra bộ gõ." Style="{StaticResource PageSubtitleStyle}" Margin="0,3,0,14"/>
 
-            <Border Style="{StaticResource CardStyle}">
-                <Grid>
+            <Border Style="{StaticResource CardStyle}" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" >
+                <Grid ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/><RowDefinition Height="12"/><RowDefinition Height="Auto"/><RowDefinition Height="12"/><RowDefinition Height="Auto"/><RowDefinition Height="12"/><RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="12"/>
+                        <RowDefinition Height="Auto"/>
+                        
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
                     <StackPanel>
                         <TextBlock Text="Bộ gõ tiếng Việt" FontSize="16" FontWeight="SemiBold" Foreground="{DynamicResource TextBrush}"/>
                         <TextBlock Text="Bật / tắt bộ gõ trên toàn hệ thống" Style="{StaticResource SmallMutedTextStyle}" Margin="0,3,0,0"/>
@@ -20,11 +28,18 @@
                     <controls:ToggleSwitch x:Name="ToggleEnabled" Grid.Column="1" IsOn="True" Toggled="ToggleEnabled_Toggled"/>
 
                     <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                        <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="10"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
                         <StackPanel>
                             <TextBlock Text="Kiểu gõ" Style="{StaticResource FieldLabelStyle}"/>
                             <ComboBox x:Name="TypingMethodCombo" SelectionChanged="TypingMethodCombo_SelectionChanged">
-                                <ComboBoxItem Content="Telex"/><ComboBoxItem Content="VNI"/><ComboBoxItem Content="VIQR"/><ComboBoxItem Content="Telex mở rộng"/>
+                                <ComboBoxItem Content="Telex"/>
+                                <ComboBoxItem Content="VNI"/>
+                                <ComboBoxItem Content="VIQR"/>
+                                <ComboBoxItem Content="Telex mở rộng"/>
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
@@ -42,11 +57,15 @@
                         <CheckBox x:Name="StartWithWindowsCheck" Grid.Column="1" Content="Khởi động cùng Windows" Checked="SettingChanged" Unchecked="SettingChanged"/>
                     </Grid>
 
-                    <Border Grid.Row="5" Grid.ColumnSpan="2" Padding="10" CornerRadius="8" Background="{DynamicResource SurfaceAltBrush}">
-                        <StackPanel>
-                            <TextBlock Text="Thử nhanh" Style="{StaticResource CardCaptionStyle}"/>
-                            <Grid Margin="0,7,0,0">
-                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="10"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                    <Border Grid.Row="5" Grid.ColumnSpan="2" Padding="10" CornerRadius="8" Background="{DynamicResource SurfaceAltBrush}" >
+                        <StackPanel Height="Auto">
+                            <TextBlock Text="Thử nhanh" Style="{StaticResource CardCaptionStyle}" Height="Auto"/>
+                            <Grid Margin="0,7,0,0" Height="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
                                 <TextBox x:Name="PreviewInput" Height="58" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextChanged="PreviewInput_TextChanged" ToolTip="Nhập nội dung để thử bộ gõ"/>
                                 <Border Grid.Column="2" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource BorderBrushSoft}" BorderThickness="1" CornerRadius="8" Padding="9">
                                     <TextBlock x:Name="PreviewOutput" Foreground="{DynamicResource TextBrush}" FontSize="13" TextWrapping="Wrap"/>

@@ -7,7 +7,7 @@ using System.Windows.Shapes;
 namespace VietType.Controls;
 
 /// <summary>
-/// Modern seamless chromeless Window using native WindowChrome.
+/// Modern seamless chromeless Window using WPF's native WindowChrome.
 /// Integrates a dedicated top TitleBar (Row 0) and content canvas (Row 1).
 /// Template is defined in VietTypeWindow.xaml (loaded as an implicit style).
 /// </summary>

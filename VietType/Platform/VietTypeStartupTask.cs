@@ -26,11 +26,24 @@ public static class VietTypeStartupTask
         catch { return false; }
     }
 
+    /// <summary>Kiểm tra task có trigger Logon để khởi động cùng Windows hay không.</summary>
+    public static bool HasLogonTrigger()
+    {
+        try
+        {
+            dynamic? task = Manager.GetTask(TaskName);
+            if (task is null || !(bool)task.Enabled) return false;
+            dynamic triggers = task.Definition.Triggers;
+            return triggers.Count > 0;
+        }
+        catch { return false; }
+    }
+
     /// <summary>
-    /// Đăng ký task khởi động cùng Windows (trigger Logon, RunLevel Highest).
-    /// Chỉ nên gọi khi tiến trình đang chạy với quyền Administrator.
+    /// Đăng ký task hỗ trợ quyền Administrator cao nhất (Highest) mà KHÔNG cần UAC prompt.
+    /// Có thể cấu hình kèm theo trigger Logon để khởi động cùng Windows elevated không cần UAC.
     /// </summary>
-    public static bool Register()
+    public static bool Register(bool enableLogonTrigger = true)
     {
         try
         {
@@ -40,7 +53,7 @@ public static class VietTypeStartupTask
             Manager.CreateOrUpdate(TaskName, definition =>
             {
                 definition.RegistrationInfo.Description =
-                    "Khởi động VietType cùng Windows với quyền cao nhất.";
+                    "Khởi động VietType với quyền cao nhất (Administrator) mà không cần UAC.";
 
                 definition.Principal.RunLevel = (int)TaskRunLevel.Highest;
 
@@ -51,11 +64,13 @@ public static class VietTypeStartupTask
                 definition.Settings.ExecutionTimeLimit = "PT0S";
                 definition.Settings.StartWhenAvailable = true;
 
-                dynamic trigger = definition.Triggers.Create((int)TaskTriggerType.Logon);
-                trigger.Delay = "PT3S";
-                trigger.UserId = $"{Environment.UserDomainName}\\{Environment.UserName}";
+                if (enableLogonTrigger)
+                {
+                    dynamic trigger = definition.Triggers.Create((int)TaskTriggerType.Logon);
+                    trigger.Delay = "PT3S";
+                    trigger.UserId = $"{Environment.UserDomainName}\\{Environment.UserName}";
+                }
 
-             
                 dynamic exec = definition.Actions.Create((int)TaskActionType.Exec);
                 exec.Path = exe;
                 exec.WorkingDirectory = AppContext.BaseDirectory;

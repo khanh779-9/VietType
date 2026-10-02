@@ -7,7 +7,7 @@
     <Style TargetType="{x:Type controls:VietTypeWindow}">
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
-                <shell:WindowChrome CaptionHeight="34" ResizeBorderThickness="6" GlassFrameThickness="0" UseAeroCaptionButtons="False"/>
+                <shell:WindowChrome CaptionHeight="34" ResizeBorderThickness="6" GlassFrameThickness="-1" UseAeroCaptionButtons="False" CornerRadius="20"/>
             </Setter.Value>
         </Setter>
         <Setter Property="Background" Value="{DynamicResource WindowBrush}"/>
@@ -20,7 +20,8 @@
                         <Border x:Name="PART_WindowBorder"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{DynamicResource BorderBrushSoft}"
-                                BorderThickness="1">
+                                BorderThickness="1"
+                                ClipToBounds="True">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="34"/>
@@ -31,7 +32,8 @@
                                 <Border Grid.Row="0"
                                         Background="{DynamicResource SurfaceBrush}"
                                         BorderBrush="{DynamicResource BorderBrushSoft}"
-                                        BorderThickness="0,0,0,1">
+                                        BorderThickness="0,0,0,1"
+                                        ClipToBounds="True">
                                     <Grid>
                                         <!-- Left: App Icon & Title -->
                                         <StackPanel Orientation="Horizontal"
@@ -52,12 +54,14 @@
                                         </StackPanel>
 
                                         <!-- Right: Caption Buttons (Minimize, Maximize/Restore, Close) -->
-                                        <StackPanel Orientation="Horizontal"
+                                        <StackPanel x:Name="PART_CaptionButtons"
+                                                    Orientation="Horizontal"
                                                     HorizontalAlignment="Right"
                                                     VerticalAlignment="Stretch"
                                                     shell:WindowChrome.IsHitTestVisibleInChrome="True">
                                             <Button x:Name="PART_MinimizeButton"
                                                     Style="{DynamicResource WindowMinMaxButtonStyle}"
+                                                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                                     ToolTip="Thu nhỏ">
                                                 <Path Width="10" Height="1"
                                                       Fill="{DynamicResource TextBrush}"
@@ -66,6 +70,7 @@
                                             </Button>
                                             <Button x:Name="PART_MaximizeButton"
                                                     Style="{DynamicResource WindowMinMaxButtonStyle}"
+                                                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                                     ToolTip="Phóng to">
                                                 <Path x:Name="PART_MaximizeIcon"
                                                       Width="10" Height="10"
@@ -76,6 +81,7 @@
                                             </Button>
                                             <Button x:Name="PART_CloseButton"
                                                     Style="{DynamicResource WindowCloseButtonStyle}"
+                                                    shell:WindowChrome.IsHitTestVisibleInChrome="True"
                                                     ToolTip="Đóng">
                                                 <Path Width="10" Height="10"
                                                       Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=Button}}"
@@ -97,6 +103,7 @@
                             <Setter TargetName="PART_WindowIcon" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
                         <Trigger Property="WindowState" Value="Maximized">
+                            <Setter TargetName="PART_WindowBorder" Property="Margin" Value="7"/>
                             <Setter TargetName="PART_WindowBorder" Property="BorderThickness" Value="0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
